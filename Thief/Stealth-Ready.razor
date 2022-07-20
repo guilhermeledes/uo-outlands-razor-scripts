@@ -1,0 +1,15 @@
+if hidden
+    overhead 'Beging stealth when READY'
+    waitforsysmsg 'You feel ready to continue stealthing.'
+    waitforsysmsg 'You have 0 stealth steps remaining.'
+    wait 100
+    skill 'Stealth'
+else
+    skill 'Hiding'
+    wait 200
+    for 10
+        overhead 'Waiting to stealth...'
+        wait 1000
+    endfor
+    skill 'Stealth'
+endif

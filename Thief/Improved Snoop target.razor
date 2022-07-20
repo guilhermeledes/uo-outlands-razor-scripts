@@ -1,0 +1,17 @@
+# Sets a snoop target backpack to a variable by Jaseowns
+# UO Outlands - https://youtu.be/SKDcAaRpYNw?t=894
+# Description:
+#  Run this script on a hotkey (ALT-D)
+#  It will bring up a cursor, select
+#  a person you want to snoop.  This
+#  will bring up their profile paperdoll and set
+#  their backpack as mySnoopTargetBack
+#  We'll use another hotkey to interact with mySnoopTargetBack
+
+overhead 'Select target to snoop'
+setvar mySnoopTarget
+dclick mySnoopTarget
+
+if findtype 3701 mySnoopTarget as tbag
+    setvar mySnoopTargetBack tbag
+endif

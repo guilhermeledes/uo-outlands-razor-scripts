@@ -1,0 +1,51 @@
+gumpclose
+if counttype 'pen and ink' backpack < 1 or insysmsg 'You have worn out your tool!'
+    restock 4
+    wft
+    target 0x2337A
+    wait 1000
+endif
+if counttype 'blank scroll%s%' backpack < 5
+    dclicktype 'pen and ink' backpack
+    waitforgump 949095101
+    gumpresponse 3
+    wft
+    waitforgump 949095101
+    target 0x50E85EED
+    waitforgump 949095101
+    organizer 1
+    wait 1000
+    restock 1
+    wft
+    target 0x2337A
+    gumpclose
+endif
+dclicktype 'pen and ink' backpack
+waitforgump 949095101 5000
+if skill 'Inscription' < 100
+    if skill 'Inscription' < 60
+        gumpresponse 108
+        waitforgump 949095101 5000
+        gumpresponse 207
+     elseif skill 'Inscription' < 70
+        gumpresponse 109
+        waitforgump 949095101
+        gumpresponse 200
+     elseif skill 'Inscription' < 80
+        gumpresponse 9
+        waitforgump 949095101
+        gumpresponse 100
+        waitforgump 949095101
+        gumpresponse 202
+     elseif skill 'Inscription' < 100
+        gumpresponse 100
+        waitforgump 949095101
+        gumpresponse 200
+     endif
+     waitforgump 949095101 5000
+     wait 1500
+else
+    overhead 'Finished'
+    stop
+endif
+loop

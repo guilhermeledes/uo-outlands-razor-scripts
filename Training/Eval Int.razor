@@ -1,0 +1,13 @@
+if not varexist myEvalTarget
+    overhead 'Select target to eval'
+    @setvar! myEvalTarget
+else
+    if skill evalint < 100
+        skill evalint
+        wft 1000
+        target myEvalTarget
+        wait 2500
+    endif
+    gumpclose
+endif
+loop

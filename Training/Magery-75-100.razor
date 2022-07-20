@@ -1,0 +1,56 @@
+# Training Magery to 100 using shelf by Jaseowns
+# UO Outlands
+# https://youtu.be/zIGvPxBPTFk
+# Requirements:
+#   Have your loadout be set to
+#   100 of BM, NS, SS, MR
+# Invisibility: ~2100 Blood moss, Nightshade
+# Summon a water elemental: >~ 5000 Blood moss, Spiders Silk, Mandrake Root#
+if skill 'Magery' < 100
+    if skill 'Magery' < 80
+    if counttype 'Blood moss' 0x483B2E51 < 1 or counttype 'Nightshade' 0x483B2E51 < 1
+          say 'Bank'
+          restock 2
+          wft
+          target self
+          wait 100
+          organizer 1
+        endif
+        if mana > 30
+            overhead "Invis" 88
+            hotkey 'Invisibility'
+            wft
+            hotkey 'Target Self'
+            wait 500
+        endif 
+        if mana < 30 and not findbuff "actively meditating"
+            hotkey 'Meditation'
+            wait 3500
+        endif
+    elseif skill 'Magery' < 100
+        if counttype 'Blood moss' 0x483B2E51 < 1 or counttype "Spider's Silk" 0x483B2E51 < 1 or counttype "Mandrake Root%s%" 0x483B2E51 < 10
+          say 'Bank'
+          restock 3
+          wft
+          target self
+          wait 100
+          organizer 1
+        endif
+        if mana > 50
+            if findtype "a water elemental" ground -1 -1 2
+                say 'a water elemental release'
+                wait 200
+            endif
+            hotkey "Water Elemental"
+            wait 5000
+        endif
+        if mana < 50 and not findbuff "actively meditating"
+            hotkey 'Meditation'
+            wait 3500
+        endif
+    endif
+    wait 1000
+    loop
+else
+    overhead 'We did it!' 88
+endif

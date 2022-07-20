@@ -1,0 +1,123 @@
+# Move Unidentified Items by Jaseowns
+# UO Outlands
+# Requirements:  Loot!
+# Additional Info: 
+#   Use this script as a basic template.  
+#   Add items to the loot_items list as you get more.  (use >info in game on the item)
+#   If you are lazy :D use one of my other scripts that contain a HUGE list of items.
+removelist loot_items
+createlist loot_items
+pushlist loot_items "martial arts scroll"
+pushlist loot_items "halberd"
+pushlist loot_items "bardiche"
+pushlist loot_items "battle axe"
+pushlist loot_items "double axe"
+pushlist loot_items "two handed axe"
+pushlist loot_items "executioner's axe"
+pushlist loot_items "large battle axe"
+pushlist loot_items "axe"
+pushlist loot_items "scimitar"
+pushlist loot_items "longsword"
+pushlist loot_items "viking sword"
+pushlist loot_items "katana"
+pushlist loot_items "cutlass"
+pushlist loot_items "broadsword"
+pushlist loot_items "war hammer"
+pushlist loot_items "war axe"
+pushlist loot_items "maul"
+pushlist loot_items "quarter staff"
+pushlist loot_items "gnarled staff"
+pushlist loot_items "black staff"
+pushlist loot_items "hammer pick"
+pushlist loot_items "club"
+pushlist loot_items "shepherd's crook"
+pushlist loot_items "war mace"
+pushlist loot_items "mace"
+pushlist loot_items "Long Spear"
+pushlist loot_items "pitchfork"
+pushlist loot_items "war fork"
+pushlist loot_items "kryss"
+pushlist loot_items "short spear"
+pushlist loot_items "bow"
+pushlist loot_items "crossbow"
+pushlist loot_items "heavy crossbow"
+pushlist loot_items "bladed staff"
+pushlist loot_items "leather tunic"
+pushlist loot_items "leather leggings"
+pushlist loot_items "leather sleeves"
+pushlist loot_items "leather cap"
+pushlist loot_items "leather gloves"
+pushlist loot_items "leather gorget"
+pushlist loot_items "leather armor"
+pushlist loot_items "leather bustier"
+pushlist loot_items "leather shorts"
+pushlist loot_items "leather skirt"
+pushlist loot_items "studded tunic"
+pushlist loot_items "studded leggings"
+pushlist loot_items "studded sleeves"
+pushlist loot_items "studded gloves"
+pushlist loot_items "studded gorget"
+pushlist loot_items "studded armor"
+pushlist loot_items "studded bustier"
+pushlist loot_items "bone armor"
+pushlist loot_items "bone legs"
+pushlist loot_items "bone arms"
+pushlist loot_items "bone helmet"
+pushlist loot_items "bone gloves"
+pushlist loot_items "ringmail tunic"
+pushlist loot_items "ringmail leggings"
+pushlist loot_items "ringmail sleeves"
+pushlist loot_items "helmet"
+pushlist loot_items "ringmail gloves"
+pushlist loot_items "orc helm"
+pushlist loot_items "chainmail tunic"
+pushlist loot_items "chainmail leggings"
+pushlist loot_items "chainmail coif"
+pushlist loot_items "platemail"
+pushlist loot_items "platemail legs"
+pushlist loot_items "platemail arms"
+pushlist loot_items "plate helm"
+pushlist loot_items "platemail gloves"
+pushlist loot_items "platemail gorget"
+pushlist loot_items "plate armor"
+pushlist loot_items "bascinet"
+pushlist loot_items "close helm"
+pushlist loot_items "norse helm"
+pushlist loot_items "wooden shield"
+pushlist loot_items "kite shield"
+pushlist loot_items "buckler "
+pushlist loot_items "buckler"
+pushlist loot_items "metal shield"
+pushlist loot_items "bronze shield"
+pushlist loot_items "kite shield"
+pushlist loot_items "heater shield"
+pushlist loot_items "Chaos shield"
+pushlist loot_items "Order shield"
+pushlist loot_items "lap harp"
+pushlist loot_items "drum"
+pushlist loot_items "lute"
+pushlist loot_items "bamboo flute"
+pushlist loot_items "tambourine"
+pushlist loot_items "spellbook"
+pushlist loot_items "wand"
+
+if not varexist my_loot_to_id_bag
+    setvar my_loot_to_id_bag
+endif
+
+foreach loot in loot_items
+    sysmsg loot
+    while findtype loot backpack as item
+        overhead item
+        getlabel item description
+        overhead description 88
+        if unidentified in description
+            lift item
+            wait 250
+            drop my_loot_to_id_bag -1 -1 -1
+        else
+            ignore item
+            wait 250
+        endif
+    endwhile
+endfor

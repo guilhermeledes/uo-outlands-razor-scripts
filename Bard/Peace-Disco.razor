@@ -1,0 +1,14 @@
+skill peace
+waitfortarget 
+
+while not insysmsg 'You play successfully, pacifying your target.'
+skill peace
+if insysmsg 'what instrument shall you play?'
+    targettype '3763' backpack
+    waitfortarget 1000
+endif
+#'You fail to pacify'
+wft
+target lasttarget 
+wait 5000
+endwhile
