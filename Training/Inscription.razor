@@ -1,12 +1,65 @@
+# Name: Inscription
+# Author: Guilherme Ledes
+# Requirements:  
+#   - Blank scrolls
+#   - Scribe's pen
+#   - bolt's of cloth (to 120)
+#   - scissors (to 120)
+#   - A pack llama to hold the resources
+#   - Define the agent restock 4 for 1 Scribe's pen
+#   - Define the agent restock 1 for 500 Blank scrolls
+#   - Define the agent restock 2 for 2 bolt's of cloth
+#   - Define the agent sell for the crafted maps
+#   - Edit the vendor name (line 24) for the one you are near from
+# Hint: 
+#   0-50 Vendor
+#   50-75 Run script inside the new players dungeon at Shelter Island
+
+@setvar! skillcap 120
+
+if skill 'Inscription' < 60
+    @setvar! min_blankscrolls 2
+    @setvar! min_cloth 0
+elseif skill 'Inscription' < 80
+    @setvar! min_blankscrolls 3
+    @setvar! min_cloth 0
+elseif skill 'Inscription' < 100
+    @setvar! min_blankscrolls 5
+    @setvar! min_cloth 0
+elseif skill 'Inscription' < 120
+    @setvar! min_blankscrolls 4
+    @setvar! min_cloth 6
+endif
+
+
 gumpclose
-if counttype 'pen and ink' backpack < 1 or insysmsg 'You have worn out your tool!'
+if counttype 4032 backpack < 1 or insysmsg 'You have worn out your tool!'
     restock 4
     wft
-    target 0x2337A
+    targettype "a pack llama" ground
     wait 1000
 endif
-if counttype 'blank scroll%s%' backpack < 5
-    dclicktype 'pen and ink' backpack
+if counttype "cut cloth" backpack < min_cloth
+    if not findtype "wizard's hat" backpack
+        overhead "No cloth"
+        say "Frida buy"
+        wait 1000
+        dclicktype "scissors" backpack
+        wft
+        targettype "bolt%s% of cloth" backpack
+        wait 1000
+    else
+      while findtype "wizard's hat" backpack
+          overhead "Found hat"
+          dclicktype "scissors" backpack
+          wft
+          targettype "wizard's hat" backpack
+          wait 1000
+      endwhile
+    endif
+endif
+if counttype 'blank scroll%s%' backpack < min_blankscrolls
+    dclicktype 4032 backpack
     waitforgump 949095101
     gumpresponse 3
     wft
@@ -17,12 +70,12 @@ if counttype 'blank scroll%s%' backpack < 5
     wait 1000
     restock 1
     wft
-    target 0x2337A
+    targettype "a pack llama" ground
     gumpclose
 endif
-dclicktype 'pen and ink' backpack
+dclicktype 4032 backpack
 waitforgump 949095101 5000
-if skill 'Inscription' < 100
+if skill 'Inscription' < skillcap
     if skill 'Inscription' < 60
         gumpresponse 108
         waitforgump 949095101 5000
@@ -41,11 +94,15 @@ if skill 'Inscription' < 100
         gumpresponse 100
         waitforgump 949095101
         gumpresponse 200
+     elseif skill 'Inscription' < 120
+        gumpresponse 103
+        waitforgump 949095101
+        gumpresponse 200
      endif
      waitforgump 949095101 5000
      wait 1500
 else
-    overhead 'Finished'
+    overhead 'Congratulations you have finished your training time!'
     stop
 endif
 loop
