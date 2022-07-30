@@ -1,0 +1,24 @@
+# Name: Camping
+# Author: Guilherme Ledes
+# Requirements:  Kindlings
+# Hint: 
+#   0-50 Vendor
+#   50-75 Run script inside the new players dungeon at Shelter Island
+
+@setvar! skillcap 100
+
+if skill 'camping' < skillcap
+    if not findtype "kindling" backpack
+        overhead "Need more kindlings"
+        stop
+    endif
+        
+    if not findtype "campfire" ground 0 1 1
+        dclicktype "kindling" backpack
+        wait 5000
+    endif
+    loop
+else
+    overhead 'Congratulations you have finished your training time!'
+    stop
+endif
