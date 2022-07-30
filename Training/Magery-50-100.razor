@@ -1,0 +1,97 @@
+# Name: Magery
+# Author: Guilherme Ledes
+# Requirements:  
+#   - Garlic
+#   - Ginseng
+#   - Mandrake Root%s%
+#   - Spider's Silk
+#   - Nightshade
+#   - Blood moss
+#   - Define the agent restock 1 for Garlic, Ginseng, Mandrake Root%s% and Spider's Silk
+#   - Define the agent restock 2 for Blood moss and Nightshade
+#   - Define the agent restock 3 for Blood moss, Mandrake Root%s% and Spider's Silk
+#   - Put all stock reagents in your bank and stay near from it during training
+# Hint: 
+#   0-50 Vendor
+#   50-75 Run script inside the new players dungeon at Shelter Island
+#   75-100 Run script near bank vendor
+
+if skill 'Magery' < 60
+  @setvar! min_mana_to_cast 11
+elseif skill 'Magery' < 80
+  @setvar! min_mana_to_cast 30
+elseif skill 'Magery' < 100
+  @setvar! min_mana_to_cast 50
+endif
+
+if mana < min_mana_to_cast and not findbuff "actively meditating"
+  while mana < maxmana
+    if not findbuff "actively meditating"
+      useskill "meditation"
+      wait 3500
+    endif
+  endwhile
+endif
+
+if skill 'Magery' < 100
+  if skill 'Magery' < 60
+    if counttype 'Garlic' < 1 or counttype 'Ginseng' < 1 or counttype 'Mandrake Root%s%' < 1 or counttype "Spider's Silk" < 1
+      say 'Bank'
+      restock 1
+      wft
+      target self
+      wait 100
+    endif
+    if mana > min_mana_to_cast
+      hotkey "Greater Heal"
+      wft 15000
+      target self
+      pause 1000
+    endif
+  elseif skill 'Magery' < 80
+    if counttype 'Blood moss' < 1 or counttype 'Nightshade' < 1
+      say 'Bank'
+      restock 2
+      wft
+      target self
+      wait 100
+    endif
+    if mana > min_mana_to_cast
+      hotkey 'Invisibility'
+      wft
+      if skill 'Magery' < 75
+        target self
+        wait 500
+        while skill 'Magery' == 75
+          overhead "Move out of the Shelter Island and restart the script"
+          wait 1000
+        endwhile
+      else
+        target self
+        wait 500
+      endif
+    endif 
+  elseif skill 'Magery' < 100
+    if counttype 'Blood moss' < 1 or counttype "Spider's Silk" < 1 or counttype "Mandrake Root%s%" < 1
+      say 'Bank'
+      restock 3
+      wft
+      target self
+      wait 100
+      wait 1000
+    endif
+    if mana > min_mana_to_cast
+      if findtype "a water elemental" ground -1 -1 2
+        say 'a water elemental release'
+        wait 200
+      endif
+      hotkey "Water Elemental"
+      wait 5000
+    endif
+  endif
+  wait 1000
+  loop
+else
+  overhead 'Congratulations you have finished your training time!'
+  stop
+endif
