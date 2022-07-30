@@ -1,3 +1,26 @@
+# Name: Begin to Hiding than Stealth or Stealth when ready
+# Author: Guilherme Ledes
+# Description: 
+#   Use only one hotkey to hide and stealth, and don't lose any step when stealthing any more,
+#   with this script you'll automaticaly begin to stealth only after you do your last available step.
+# Hint: 
+#   - Disable auto-stealth
+#   - Add the following overheadmessages to your stealther character's profile
+#   - C:\Program Files (x86)\Ultima Online Outlands\ClassicUO\Data\Plugins\Assistant\Profiles\stealther_profile.xml
+#	<overheadmessages>
+#      <overheadmessage searchtext="You feel comfortable enough to begin stealthing" message="READY" hue="68" />
+#      <overheadmessage searchtext="You begin to move quietly" message="GO" hue="68" />
+#      <overheadmessage searchtext="You have 4 stealth" message="LAST STEPS" hue="43" />
+#      <overheadmessage searchtext="You have 3 stealth" message="3" hue="43" />
+#      <overheadmessage searchtext="You have 2 stealth" message="2" hue="43" />
+#      <overheadmessage searchtext="You have 1 stealth" message="1" hue="43" />
+#      <overheadmessage searchtext="You have 0 stealth" message="STOP" hue="33" />
+#      <overheadmessage searchtext="You have been revealed" message="REVEALED" hue="33" />
+#      <overheadmessage searchtext="You feel ready to continue stealth" message="READY" hue="68" />
+#      <overheadmessage searchtext="You must hide first" message="NOT HIDDEN" hue="33" />
+#	</overheadmessages>
+
+clearsysmsg 
 if hidden
     overhead 'Beging stealth when READY'
     waitforsysmsg 'You feel ready to continue stealthing.'
@@ -7,9 +30,11 @@ if hidden
 else
     skill 'Hiding'
     wait 200
-    for 10
-        overhead 'Waiting to stealth...'
-        wait 1000
-    endfor
-    skill 'Stealth'
+    if not insysmsg "You must wait a few moments to use another skill."
+        for 10
+            overhead '{{index}} Waiting to stealth...'
+            wait 1000
+        endfor
+        skill 'Stealth'
+    endif
 endif
