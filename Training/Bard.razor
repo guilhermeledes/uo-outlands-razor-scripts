@@ -6,8 +6,10 @@
 #   50-75 Target any training NPC at Shelter Island (1915,2633)
 #   75-100 Target any monster at Prevalia Zoo (1814,1521)
 
-if skill 'Peacemaking' = 100 and skill 'Discordance' = 100
-  overhead 'Congratulations, you finish your training!!!'
+@setvar! skillcap 100
+
+if skill 'Peacemaking' = skillcap and skill 'Discordance' = skillcap
+  overhead 'Congratulations you have finished your training time!'
   unsetvar 'bardingTrainingTarget'
   stop
 endif
@@ -19,42 +21,42 @@ endif
 wait 500
 
 if find 'bardingTrainingTarget' ground
-if skill 'Peacemaking' < 100
-  overhead 'Peacemaking'
-  skill 'Peacemaking'
-  waitfortarget 1000
-  if insysmsg 'what instrument shall you play?'
-    targettype '3763' backpack
+  if skill 'Peacemaking' < skillcap
+    overhead 'Peacemaking'
+    skill 'Peacemaking'
     waitfortarget 1000
+    if insysmsg 'what instrument shall you play?'
+      targettype '3763' backpack
+      waitfortarget 1000
+    endif
+    target bardingTrainingTarget
   endif
-  target bardingTrainingTarget
-endif
-if insysmsg 'Target cannot be seen' or insysmsg 'That is too far away'
-  unsetvar 'bardingTrainingTarget'
-  overhead 'Chose another target to train'
-  replay
-endif
+  if insysmsg 'Target cannot be seen' or insysmsg 'That is too far away'
+    unsetvar 'bardingTrainingTarget'
+    overhead 'Chose another target to train'
+    replay
+  endif
 
-wait 5150
+  wait 5150
 
-if skill 'Discordance' < 100
-    overhead 'Discordance'
-  skill 'Discordance'
-  waitfortarget 1000
-  if insysmsg 'what instrument shall you play?'
-    targettype '3763' backpack
+  if skill 'Discordance' < skillcap
+      overhead 'Discordance'
+    skill 'Discordance'
     waitfortarget 1000
+    if insysmsg 'what instrument shall you play?'
+      targettype '3763' backpack
+      waitfortarget 1000
+    endif
+    target bardingTrainingTarget
   endif
-  target bardingTrainingTarget
-endif
-if insysmsg 'Target cannot be seen' or insysmsg 'That is too far away'
-  unsetvar 'bardingTrainingTarget'
-  overhead 'Chose another target to train'
-  replay
-endif
+  if insysmsg 'Target cannot be seen' or insysmsg 'That is too far away'
+    unsetvar 'bardingTrainingTarget'
+    overhead 'Chose another target to train'
+    replay
+  endif
 
-wait 5150
-loop
+  wait 5150
+  loop
 else
   unsetvar 'bardingTrainingTarget'
   overhead 'Chose another target to train'
