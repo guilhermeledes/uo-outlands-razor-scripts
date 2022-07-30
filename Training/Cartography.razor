@@ -1,0 +1,51 @@
+# Name: Cartography
+# Author: Guilherme Ledes
+# Requirements:  
+#   - Blank maps
+#   - Mapmaker's pen
+#   - A pack llama to hold the resources
+#   - Be near from a mapmaker vendor
+#   - Define the agent restock 4 for 1 Mapmaker's pen
+#   - Define the agent restock 5 for 50 Blank maps
+#   - Define the agent sell for the crafted maps
+#   - Edit the vendor name (line 24) for the one you are near from
+# Hint: 
+#   0-50 Vendor
+#   50-75 Run script inside the new players dungeon at Shelter Island
+
+@setvar! skillcap 100
+
+gumpclose
+if counttype 4031 backpack < 1 or insysmsg 'You have worn out your tool!'
+    restock 4
+    wft
+    targettype "a pack llama" ground
+    wait 1000
+endif
+if counttype 5356 backpack 2955 < 1
+    say "Isoke Sell"
+    wait 1000
+    restock 5
+    wft
+    targettype "a pack llama" ground
+    gumpclose
+endif
+dclicktype 4031 backpack
+waitforgump 949095101 5000
+gumpresponse 100
+waitforgump 949095101 5000
+if skill 'Cartography' < skillcap
+    if skill 'Cartography' < 75
+        gumpresponse 201
+     elseif skill 'Cartography' < 100
+        gumpresponse 202
+     elseif skill 'Cartography' < 120
+        gumpresponse 203
+     endif
+     waitforgump 949095101 5000
+     wait 1500
+else
+    overhead 'Congratulations you have finished your training time!'
+    stop
+endif
+loop
