@@ -1,13 +1,26 @@
+# Name: Eval Int
+# Author: Guilherme Ledes
+# Requirements:  Any NPC
+# Hint: 
+#   0-50 Vendor
+#   50-75 Target a NPC at Shelter Island new players dungeon
+#   75-100 Target any monster at Prevalia Zoo (1814,1521)
+
+@setvar! skillcap 100
+
 if not varexist myEvalTarget
     overhead 'Select target to eval'
     @setvar! myEvalTarget
 else
-    if skill evalint < 100
+    if skill evalint < skillcap
         skill evalint
         wft 1000
         target myEvalTarget
         wait 2500
+        gumpclose
+    else
+      overhead 'Congratulations you have finished your training time!'
+      stop
     endif
-    gumpclose
 endif
 loop
