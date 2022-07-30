@@ -13,12 +13,12 @@ if not hidden  and hidden_training = 1
   useskill 'Hiding'
   wait 100
 endif
-if findtype '7875' ground 0 1 1 as 'pickpocketDip'
+if findtype '7875' ground -1 -1 1 as 'pickpocketDip'
     dclick 'pickpocketDip'
     wait 11200
     loop
 else
     overhead 'You need to be in front of a Pickpocket Dip'
-    stop
+    replay
 endif
 loop
