@@ -1,6 +1,18 @@
-# Training Hiding and Stealth by Jaseowns - https://youtu.be/Ch97IWwJvVM
-# UO Outlands
-# Requirements:  Do not be in a house
+# Name: Hiding and Stealth training
+# Author: Guilherme Ledes
+# Requirements:  Any NPC
+# Hint: 
+#   0-50 Vendor
+#   50-75 Run script inside the new players dungeon at Shelter Island
+#   when you reach 80 hiding, go back to new players dungeon at Shelter Island to screase stealth skillgain until 75
+
+@setvar! skillcap 100
+
+if skill 'Hiding' = skillcap and skill 'Stealth' = skillcap
+  overhead 'Congratulations you have finished your training time!'
+  stop
+endif
+
 if skill "hiding" < 80
     useskill 'Hiding'
     wait 11000
@@ -12,7 +24,7 @@ if not hidden
     wait 11000
 endif
 
-if hidden and skill 'stealth' < 100
+if hidden and skill 'Stealth' < skillcap
     useskill 'Stealth'
     wait 11000
 else
