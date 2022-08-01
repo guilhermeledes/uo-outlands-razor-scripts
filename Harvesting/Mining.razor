@@ -6,30 +6,6 @@
 #   - rune or runebook with default rune to escape
 #   - 100 Hiding to escape
 #   - 100 Tracking to detect reds
-# Hint: 
-#   - Add the following overheadmessages to your miner character's profile
-#   - C:\Program Files (x86)\Ultima Online Outlands\ClassicUO\Data\Plugins\Assistant\Profiles\miner_profile.xml
-#	<overheadmessages>
-#		<overheadmessage searchtext="The world will save" message="Game will save soon..." hue="18" />
-#		<overheadmessage searchtext="The world is saving" message="Game saving..." hue="18" />
-#		<overheadmessage searchtext="World save complete" message="Game saved!" hue="18" />
-#		<overheadmessage searchtext="Now tracking:" message="PK {3} {4} {5}" hue="33" />
-#		<overheadmessage searchtext="Your concentration is disturbed, thus ruining thy spell." message="INTERUPTED" hue="53" />
-#		<overheadmessage searchtext="That is too far away" message="OUT OF RANGE" hue="53" />
-#		<overheadmessage searchtext="You have been revealed!" message="REVEALED" hue="33" />
-#		<overheadmessage searchtext="You loosen some rocks" message="Fail..." hue="43" />
-#		<overheadmessage searchtext="You do not see any harvestable resources nearby" message="Move to next spot" hue="53" />
-#		<overheadmessage searchtext="You dig some iron ore and put it in your backpack." message="Iron" hue="2875" />
-#		<overheadmessage searchtext="You dig some dull copper ore and put it in your backpack." message="Dull Copper" hue="2419" />
-#		<overheadmessage searchtext="You dig some shadow iron ore and put it in your backpack." message="Shadow Iron" hue="2406" />
-#		<overheadmessage searchtext="You dig some copper ore and put it in your backpack." message="Copper" hue="2413" />
-#		<overheadmessage searchtext="You dig some bronze ore and put it in your backpack." message="Bronze" hue="2418" />
-#		<overheadmessage searchtext="You dig some golden ore and put it in your backpack." message="Golden" hue="2213" />
-#		<overheadmessage searchtext="You dig some agapite ore and put it in your backpack." message="Agapite" hue="2425" />
-#		<overheadmessage searchtext="You dig some verite ore and put it in your backpack." message="Verite" hue="2207" />
-#		<overheadmessage searchtext="You dig some valorite ore and put it in your backpack." message="Valorite" hue="2219" />
-#		<overheadmessage searchtext="You dig some avarite ore and put it your backpack. " message="Avarite" hue="1763" />
-#	</overheadmessages>
 
 @setvar! recall_on_red_alert 0
 
@@ -68,7 +44,6 @@ if inlist "miner_actions" "red_alert"
     stop
 endif
 
-clearsysmsg 
 if diffweight <= 30
     if diffweight <= 30
         overhead "Too heavy... Go to smelt some ores" 34
@@ -88,6 +63,8 @@ if rhandempty ?? 0
     replay
 endif
 
+
+clearsysmsg 
 overhead 'Mining' 68
 hotkey 'Use item in hand'
 wait 250
@@ -105,9 +82,6 @@ for 30
                 replay
             endif
         endfor
-    elseif insysmsg "now tracking"
-        pushlist "miner_actions" "red_alert"
-        replay
     elseif hp < maxhp
         if not varexist recall_target
           overhead "Select your escape rune" 88
@@ -122,6 +96,9 @@ for 30
           target recall_target
           stop
         endif
+    elseif insysmsg "now tracking"
+        pushlist "miner_actions" "red_alert"
+        replay
     elseif rhandempty ?? 0 
         overhead "Broke pickaxe" 34
         replay
@@ -142,17 +119,44 @@ for 30
             // No Ore
             overhead 'Move to next spot' 88
             replay
-        elseif insysmsg "skillgain" or insysmsg "harvesting is not allowed"
-            // Gained skill
-            replay
         elseif insysmsg "world is saving" or insysmsg 'World save complete'
             // World Save
             replay
         elseif insysmsg "You loosen"
             // Failed
             replay
-        elseif insysmsg "You dig"
-            // Success
+        elseif insysmsg "dull copper"
+            overhead "> Dull Copper <" 2419
+            replay
+        elseif insysmsg "shadow iron"
+            overhead "> Shadow Iron <" 2406
+            replay
+        elseif insysmsg "iron"
+            overhead "> Iron <" 2875
+            replay
+        elseif insysmsg "copper"
+            overhead "> Copper <" 2413
+            replay
+        elseif insysmsg "bronze"
+            overhead "> Bronze <" 2418
+            replay
+        elseif insysmsg "golden"
+            overhead "> Golden <" 2213
+            replay
+        elseif insysmsg "agapite"
+            overhead "> Agapite <" 2425
+            replay
+        elseif insysmsg "verite"
+            overhead "> Verite <" 2207
+            replay
+        elseif insysmsg "valorite"
+            overhead "> Valorite <" 2219
+            replay
+        elseif insysmsg "avarite"
+            overhead "> Avarite <" 1763
+            replay
+        elseif insysmsg "skillgain" or insysmsg "harvesting is not allowed"
+            // Gained skill
             replay
         elseif insysmsg "You must wait"
             // Wait message
@@ -162,6 +166,7 @@ for 30
         endif
     endif
 endfor
+
 
 if insysmsg "You must wait"
     // Wait message
