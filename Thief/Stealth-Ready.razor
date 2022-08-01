@@ -7,7 +7,7 @@
 #   - Disable auto-stealth
 #   - Add the following overheadmessages to your stealther character's profile
 #   - C:\Program Files (x86)\Ultima Online Outlands\ClassicUO\Data\Plugins\Assistant\Profiles\stealther_profile.xml
-#	<overheadmessages>
+#   <overheadmessages>
 #      <overheadmessage searchtext="You feel comfortable enough to begin stealthing" message="READY" hue="68" />
 #      <overheadmessage searchtext="You begin to move quietly" message="GO" hue="68" />
 #      <overheadmessage searchtext="You have 4 stealth" message="LAST STEPS" hue="43" />
@@ -18,9 +18,15 @@
 #      <overheadmessage searchtext="You have been revealed" message="REVEALED" hue="33" />
 #      <overheadmessage searchtext="You feel ready to continue stealth" message="READY" hue="68" />
 #      <overheadmessage searchtext="You must hide first" message="NOT HIDDEN" hue="33" />
-#	</overheadmessages>
+#   </overheadmessages>
 
 clearsysmsg 
+if not listexists stealth_timer
+    createlist stealth_timer
+    for 10
+        pushlist stealth_timer index
+    endfor
+endif
 if hidden
     overhead 'Beging stealth when READY'
     waitforsysmsg 'You feel ready to continue stealthing.'
@@ -31,8 +37,8 @@ else
     skill 'Hiding'
     wait 200
     if not insysmsg "You must wait a few moments to use another skill."
-        for 10
-            overhead '{{index}} Waiting to stealth...'
+        foreach current_time in stealth_timer
+            overhead '{{current_time}}s to stealth...'
             wait 1000
         endfor
         skill 'Stealth'
