@@ -1,0 +1,13 @@
+clearsysmsg 
+dclicktype 'dagger'
+wft 1000
+targetrelloc 0 1
+wait 500
+if insysmsg 'You put some kindling into your backpack.'
+    overhead 'GETTING KINDLING' 68
+elseif insysmsg "There's not enough wood here to harvest."
+    overhead 'NO MORE KINDLING' 53
+elseif insysmsg "You can't use a bladed item on that."
+    overhead 'NO TREE AROUND' 33
+endif
+loop
