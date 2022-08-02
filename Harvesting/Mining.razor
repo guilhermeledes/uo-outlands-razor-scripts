@@ -87,7 +87,6 @@ for 30
           overhead "Select your escape rune" 88
           setvar recall_target
         endif
-        if insysmsg "now tracking"
           overhead 'Recalling...'
           while not targetexists
               cast "Recall"
@@ -95,7 +94,6 @@ for 30
           endwhile
           target recall_target
           stop
-        endif
     elseif insysmsg "now tracking"
         pushlist "miner_actions" "red_alert"
         replay
