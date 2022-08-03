@@ -82,7 +82,7 @@ for 30
                 replay
             endif
         endfor
-    elseif hp < maxhp
+    elseif diffhits >= 10
         if not varexist recall_target
           overhead "Select your escape rune" 88
           setvar recall_target
