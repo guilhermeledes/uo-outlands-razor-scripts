@@ -1,0 +1,22 @@
+say "Bank"
+
+if not varexist ingot_storage
+    overhead "Select container to store the ingots in"
+    @setvar ingot_storage
+endif
+
+if findtype "iron ingot%s" backpack
+    organizer 1
+endif
+
+while queued
+    overhead "Moving ingots..."
+    wait 250
+endwhile
+
+while findtype "iron ingot%s" ingot_storage as current_ingot
+    getlabel current_ingot desc
+    overhead desc
+    ignore current_ingot
+endwhile
+clearignore 
