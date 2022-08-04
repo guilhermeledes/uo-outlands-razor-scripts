@@ -1,0 +1,12 @@
+if findtype "forge" true
+    while findtype "iron ore" backpack as ore
+        getlabel ore desc
+        overhead "Smelting {{desc}}"
+        dclick ore
+        wait 250
+        ignore ore
+    endwhile
+else
+    overhead "No forge near"
+endif
+clearignore 
