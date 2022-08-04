@@ -7,6 +7,39 @@
 #   - 100 Hiding to escape
 #   - 100 Tracking to detect reds
 
+if not listexists uses_countdown
+  createlist uses_countdown
+  pushlist uses_countdown '(1 uses remaining)'
+  pushlist uses_countdown '(2 uses remaining)'
+  pushlist uses_countdown '(3 uses remaining)'
+  pushlist uses_countdown '(4 uses remaining)'
+  pushlist uses_countdown '(5 uses remaining)'
+  pushlist uses_countdown '(6 uses remaining)'
+  pushlist uses_countdown '(7 uses remaining)'
+  pushlist uses_countdown '(8 uses remaining)'
+  pushlist uses_countdown '(9 uses remaining)'
+  pushlist uses_countdown '(10 uses remaining)'
+  pushlist uses_countdown '(15 uses remaining)'
+  pushlist uses_countdown '(20 uses remaining)'
+  pushlist uses_countdown '(30 uses remaining)'
+  pushlist uses_countdown '(40 uses remaining)'
+  pushlist uses_countdown '(50 uses remaining)'
+  pushlist uses_countdown '(60 uses remaining)'
+  pushlist uses_countdown '(70 uses remaining)'
+  pushlist uses_countdown '(80 uses remaining)'
+  pushlist uses_countdown '(90 uses remaining)'
+  pushlist uses_countdown '(100 uses remaining)'
+endif
+
+if findtype "pickaxe" hand as pickaxe
+    getlabel pickaxe description
+    foreach uses in uses_countdown
+        if uses in description
+            overhead uses 53
+        endif
+    endfor
+endif
+
 @setvar! recall_on_red_alert 0
 
 if not findbuff "tracking hunting"
@@ -41,6 +74,16 @@ if inlist "miner_actions" "red_alert"
     endif
     poplist "miner_actions" "red_alert"
     overhead "Stopping script..." 34
+    stop
+endif
+
+if diffhits >= 10
+    overhead 'Recalling...'
+    while not targetexists
+        cast "Recall"
+        wait 200
+    endwhile
+    target recall_target
     stop
 endif
 
@@ -83,17 +126,13 @@ for 30
             endif
         endfor
     elseif diffhits >= 10
-        if not varexist recall_target
-          overhead "Select your escape rune" 88
-          setvar recall_target
-        endif
-          overhead 'Recalling...'
-          while not targetexists
-              cast "Recall"
-              wait 200
-          endwhile
-          target recall_target
-          stop
+        overhead 'Recalling...'
+        while not targetexists
+            cast "Recall"
+            wait 200
+        endwhile
+        target recall_target
+        stop
     elseif insysmsg "now tracking"
         pushlist "miner_actions" "red_alert"
         replay
