@@ -1,0 +1,17 @@
+removelist stealing_timer
+if not listexists stealing_timer
+    createlist stealing_timer
+    for 11
+        pushlist stealing_timer index front
+    endfor
+endif
+
+useskill "Stealing"
+wft 1000
+hotkey "target closest non-friendly monster"
+foreach current_time in stealing_timer
+    if current_time > 0
+        overhead '{{current_time}}s to steal...'
+        wait 1000
+     endif
+endfor
