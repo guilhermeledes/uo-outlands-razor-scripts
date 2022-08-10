@@ -102,7 +102,7 @@ pushlist loot_items "spellbook"
 pushlist loot_items "wand"
 
 if not varexist my_loot_to_id_bag
-    setvar my_loot_to_id_bag
+    @setvar! my_loot_to_id_bag
 endif
 
 foreach loot in loot_items
