@@ -49,6 +49,10 @@ if not findbuff "tracking hunting"
     waitforgump 4267467659
     gumpresponse 6
     waitforgump 4267467659
+    while not insysmsg "You will now hunt murderer players"
+        gumpresponse 8
+        waitforgump 4267467659
+    endwhile
     gumpclose
 endif
 
@@ -71,6 +75,7 @@ if inlist "lumber_actions" "red_alert"
         endwhile
         target recall_target
     elseif skill "Hiding" >= 40
+        wait 500
         useskill "Hiding"
     endif
     poplist "lumber_actions" "red_alert"
