@@ -1,0 +1,233 @@
+# Name: Minning
+# Author: Guilherme Ledes (based on Jaseowns`s script)
+# Requirements:
+    #   - Hatchet
+#   - 40 Magery to escape
+#   - rune or runebook with default rune to escape
+#   - 100 Hiding to escape
+#   - 100 Tracking to detect reds
+removelist uses_countdown
+if not listexists uses_countdown
+  createlist uses_countdown
+  pushlist uses_countdown '(1 uses remaining)'
+  pushlist uses_countdown '(2 uses remaining)'
+  pushlist uses_countdown '(3 uses remaining)'
+  pushlist uses_countdown '(4 uses remaining)'
+  pushlist uses_countdown '(5 uses remaining)'
+  pushlist uses_countdown '(6 uses remaining)'
+  pushlist uses_countdown '(7 uses remaining)'
+  pushlist uses_countdown '(8 uses remaining)'
+  pushlist uses_countdown '(9 uses remaining)'
+  pushlist uses_countdown '(10 uses remaining)'
+  pushlist uses_countdown '(15 uses remaining)'
+  pushlist uses_countdown '(20 uses remaining)'
+  pushlist uses_countdown '(30 uses remaining)'
+  pushlist uses_countdown '(40 uses remaining)'
+  pushlist uses_countdown '(50 uses remaining)'
+  pushlist uses_countdown '(60 uses remaining)'
+  pushlist uses_countdown '(70 uses remaining)'
+  pushlist uses_countdown '(80 uses remaining)'
+  pushlist uses_countdown '(90 uses remaining)'
+  pushlist uses_countdown '00 uses remaining)'
+endif
+
+if findtype "hatchet" hand as hatchet
+    getlabel hatchet description
+    foreach uses in uses_countdown
+        if uses in description
+            overhead description 53
+            sysmsg description 53
+        endif
+    endfor
+endif
+
+@setvar! recall_on_red_alert 0
+
+if not findbuff "tracking hunting"
+    overhead "Beging Tracking" 53
+    skill 'tracking'
+    waitforgump 4267467659
+    gumpresponse 6
+    waitforgump 4267467659
+    gumpclose
+endif
+
+if not varexist recall_target
+    overhead "Select your escape runebook" 88
+    setvar recall_target
+endif
+
+if not listexists "lumber_actions"
+    createlist "lumber_actions"
+endif
+
+if inlist "lumber_actions" "red_alert"
+    overhead "Red Alert!" 34
+    if skill "Magery" >= 40 and recall_on_red_alert = 1
+        overhead 'Recalling...'
+        while not targetexists
+            cast "Recall"
+            wait 200
+        endwhile
+        target recall_target
+    elseif skill "Hiding" >= 40
+        useskill "Hiding"
+    endif
+    poplist "lumber_actions" "red_alert"
+    overhead "Stopping script..." 34
+    stop
+endif
+
+if diffhits >= 10
+    overhead 'Recalling...'
+    while not targetexists
+        cast "Recall"
+        wait 200
+    endwhile
+    target recall_target
+    stop
+endif
+
+if diffweight <= 30
+    if diffweight <= 30
+    overhead "Too heavy... Go unload some boards" 34
+        replay
+    endif
+endif
+
+if findtype "log%s" backpack
+    dclicktype 'log%s' backpack
+    wait 100
+endif
+
+if lhandempty ?? 0 
+    if findtype "hatchet" backpack
+        dclicktype 'hatchet' backpack
+        wait 1000
+    endif
+endif
+            
+if lhandempty ?? 0 
+    overhead "No more hatchet!" 34
+    replay
+endif
+
+
+clearsysmsg 
+overhead 'Lumberjacking' 68
+hotkey 'Use item in hand'
+wft 1000
+target 'self'
+wait 250
+for 30
+    wait 250
+    if insysmsg 'world is saving'
+        for 30
+            overhead 'Waiting for world save...'
+            wait 1000
+            if insysmsg 'save complete'
+                overhead 'Save complete - continue on!' 88
+                replay
+            elseif insysmsg "now tracking"
+                pushlist "lumber_actions" "red_alert"
+                replay
+            endif
+        endfor
+    elseif diffhits >= 10
+        overhead 'Recalling...'
+        while not targetexists
+            cast "Recall"
+            wait 200
+        endwhile
+        target recall_target
+        stop
+    elseif insysmsg "now tracking"
+        pushlist "lumber_actions" "red_alert"
+        replay
+    elseif lhandempty ?? 0 
+        overhead "Broke hatchet" 34
+        replay
+    elseif insysmsg 'You do not see any'
+        overhead 'Move to next tree' 88
+        wait 250
+        replay
+    elseif insysmsg "harvesting is not allowed"
+        overhead 'Move out of town...'
+        wait 1000
+        replay
+    elseif insysmsg "travel"
+        overhead 'Waiting for travel...'
+        wait 1000
+        replay
+    else
+        if insysmsg "any harvestable" or insysmsg "lumber_actions"
+            // No Ore
+            overhead 'Move to next tree' 88
+            replay
+        elseif insysmsg "world is saving" or insysmsg 'World save complete'
+            // World Save
+            replay
+        elseif insysmsg "You loosen"
+            // Failed
+            replay
+        elseif insysmsg "dull"
+            overhead "> Dullwood <" 2419
+            replay
+        elseif insysmsg "shadow"
+            overhead "> Shadowwood <" 2406
+            replay
+        elseif insysmsg "copper"
+            overhead "> Copperwood <" 2413
+            replay
+        elseif insysmsg "bronze"
+            overhead "> Bronzewood <" 2418
+            replay
+        elseif insysmsg "golden"
+            overhead "> Goldenwood <" 2213
+            replay
+        elseif insysmsg "rose"
+            overhead "> Rosewood <" 2425
+            replay
+        elseif insysmsg "vere"
+            overhead "> Verewood <" 2207
+            replay
+        elseif insysmsg "vale"
+            overhead "> Valewood <" 2219
+            replay
+        elseif insysmsg "avar"
+            overhead "> Avarwood <" 1763
+            replay
+        elseif insysmsg "logs"
+            overhead "> Regular <" 2875
+            replay
+        elseif insysmsg "skillgain" or insysmsg "harvesting is not allowed"
+            // Gained skill
+            replay
+        elseif insysmsg "You must wait"
+            // Wait message
+            overhead 'You must wait..' 34
+            wait 500
+            replay
+        endif
+    endif
+endfor
+
+
+if insysmsg "You must wait"
+    // Wait message
+    overhead 'You must wait..' 34
+    wait 500
+    replay
+endif
+
+overhead 'Captcha break!' 34
+for 20
+    overhead 'Awaiting Captcha...' 34
+    wait 1000
+    if insysmsg 'Captcha successful'
+        overhead 'Success - continue on!' 88
+        wait 1000
+        replay
+    endif
+endfor
+overhead 'Stopping script' 34
