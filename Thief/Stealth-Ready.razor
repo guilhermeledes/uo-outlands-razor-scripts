@@ -20,11 +20,11 @@
 #      <overheadmessage searchtext="You must hide first" message="NOT HIDDEN" hue="33" />
 #   </overheadmessages>
 
-clearsysmsg 
+removelist stealth_timer
 if not listexists stealth_timer
     createlist stealth_timer
-    for 10
-        pushlist stealth_timer index
+    for 11
+        pushlist stealth_timer index front
     endfor
 endif
 if hidden
@@ -38,9 +38,12 @@ else
     wait 200
     if not insysmsg "You must wait a few moments to use another skill."
         foreach current_time in stealth_timer
-            overhead '{{current_time}}s to stealth...'
-            wait 1000
+            if current_time > 0
+                overhead '{{current_time}}s to stealth...'
+                wait 1000
+             endif
         endfor
         skill 'Stealth'
     endif
 endif
+clearsysmsg 
