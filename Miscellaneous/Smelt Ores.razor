@@ -1,12 +1,12 @@
-if findtype "forge" true
-    while findtype "iron ore" backpack as ore
-        getlabel ore desc
-        overhead "Smelting {{desc}}"
-        dclick ore
-        wait 250
-        ignore ore
-    endwhile
-else
-    overhead "No forge near"
-endif
-clearignore 
+while findtype "iron ore" backpack as ore
+    getlabel ore desc
+    dclick ore
+    wait 250
+    if insysmsg "You do not see any nearby forges"
+        overhead "No forge near"
+        stop
+    endif
+    overhead "Smeled {{desc}}"
+    @ignore ore
+endwhile
+@clearignore 
