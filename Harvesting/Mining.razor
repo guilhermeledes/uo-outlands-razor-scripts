@@ -6,7 +6,7 @@
 #   - rune or runebook with default rune to escape
 #   - 100 Hiding to escape
 #   - 100 Tracking to detect reds
-
+removelist uses_countdown
 if not listexists uses_countdown
   createlist uses_countdown
   pushlist uses_countdown '(1 uses remaining)'
@@ -28,14 +28,15 @@ if not listexists uses_countdown
   pushlist uses_countdown '(70 uses remaining)'
   pushlist uses_countdown '(80 uses remaining)'
   pushlist uses_countdown '(90 uses remaining)'
-  pushlist uses_countdown '(100 uses remaining)'
+  pushlist uses_countdown '00 uses remaining)'
 endif
 
 if findtype "pickaxe" hand as pickaxe
     getlabel pickaxe description
     foreach uses in uses_countdown
         if uses in description
-            overhead uses 53
+            overhead description 53
+            sysmsg description 53
         endif
     endfor
 endif
