@@ -5,16 +5,13 @@
 # Shelf loadout: needs to have iron lockpick tools and iron trap tools
 
 if findtype "strong box" backpack
-    if skill "Lockpicking" < 100
+    if skill "Lockpicking" < 102
         overhead 'Lockpicking' 88
         if findtype "lockpicks" backpack
             dclicktype "lockpicks" backpack
             wft
             targettype "strong box" backpack
-            for 2    
-                useskill  "spiritspeak"
-                wait 2100
-            endfor
+            wait 4000
         else
             overhead "No lock picks!" 34
             say 'Bank'
@@ -26,16 +23,13 @@ if findtype "strong box" backpack
     endif
 
     
-    if skill "Remove Trap" < 100
+    if skill "Remove Trap" < 101
         overhead 'Remove trap' 88
         if findtype "drill" backpack
             dclicktype "drill" backpack
             wft
             targettype "strong box" backpack
-            for 2    
-                useskill  "spiritspeak"
-                wait 2100
-            endfor
+            wait 4000
         else
             overhead "No trap tools!" 34
             say 'Bank'
