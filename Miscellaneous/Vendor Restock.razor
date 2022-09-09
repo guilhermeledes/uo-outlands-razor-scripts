@@ -1,0 +1,527 @@
+//Script created by Mustang#1702
+//In order to prevent overlapping items, separate containers for cores/scrolls/extracts etc. are recommended
+//Item placement is designed for small paragon chests, items in other containers might overlap which each other
+
+//If you want to add other items to this script 
+//keep in mind that some items like tmaps, skillscrolls, etc. have the same ID and hue
+
+overhead 'Loading prices, please wait...' 2263
+
+//=========================================
+//Change this parameter value to 0 if you don't want to set target containers every time
+setvar! setContainerVariables '1'
+
+//=========================================
+//Set your prices here:
+    
+//Cores
+setvar! AirCorePrice '15000'
+setvar! ArtisanCorePrice '20000'
+setvar! BloodCorePrice '5000'
+setvar! CommandCorePrice '35000'
+setvar! DeathCorePrice '2500'
+setvar! DisciplineCorePrice '2500'
+setvar! EarthCorePrice '3000'
+setvar! EldritchCorePrice '5000'
+setvar! FireCorePrice '2500'
+setvar! FortuneCorePrice '19500'
+setvar! HolyCorePrice '2500'
+setvar! LyricCorePrice '24000'
+setvar! PoisonCorePrice '12000'
+setvar! ShadowCorePrice '3000'
+setvar! VoidCorePrice '6500'
+setvar! WaterCorePrice '2500'
+
+//Distillations
+setvar! AirDistillationPrice '22000'
+setvar! ArtisanDistillationPrice '20000'
+setvar! BloodDistillationPrice '8000'
+setvar! CommandDistillationPrice '10000'
+setvar! DeathDistillationPrice '7000'
+setvar! DisciplineDistillationPrice '4000'
+setvar! EarthDistillationPrice '5000'
+setvar! EldritchDistillationPrice '10000'
+setvar! FireDistillationPrice '6000'
+setvar! FortuneDistillationPrice '15000'
+setvar! HolyDistillationPrice '7500'
+setvar! LyricDistillationPrice '15000'
+setvar! PoisonDistillationPrice '27000'
+setvar! ShadowDistillationPrice '9000'
+setvar! VoidDistillationPrice '10000'
+setvar! WaterDistillationPrice '7000'
+
+//Skill Scrolls
+setvar! AlchemyPrice '12000'
+setvar! AnimalLorePrice '10000'
+setvar! AnimalTamingPrice '10000'
+setvar! ArmsLorePrice '7500'
+setvar! BeggingPrice '7500'
+setvar! BlacksmithyPrice '10000'
+setvar! CampingPrice '10000'
+setvar! CarpentryPrice '7500'
+setvar! CartographyPrice '10000'
+setvar! ChivalryPrice '10000'
+setvar! CookingPrice '10000'
+setvar! DetectHiddenPrice '10000'
+setvar! DiscordancePrice '10000'
+setvar! FishingPrice '10000'
+setvar! ForensicEvalPrice '10000'
+setvar! HerdingPrice '10000'
+setvar! InscriptionPrice '10000'
+setvar! ItemIdPrice '7500'
+setvar! LockpickingPrice '7500'
+setvar! LumberjackingPrice '7500'
+setvar! MusicanshipPrice '12000'
+setvar! MiningPrice '10000'
+setvar! NecromancyPrice '10000'
+setvar! PeacemakingPrice '8000'
+setvar! PoisoningPrice '10000'
+setvar! ProvocationPrice '8000'
+setvar! RemoveTrapPrice '10000'
+setvar! SpiritSpeakPrice '10000'
+setvar! StealthPrice '7500'
+setvar! TailoringPrice '10000'
+setvar! TasteIdPrice '10000'
+setvar! TinkeringPrice '10000'
+setvar! TrackingPrice '7500'
+setvar! VeterinaryPrice '7500'
+
+//Other
+setvar! SkillOrbPrice '21000'
+setvar! MastercraftingDiagramPrice '35000'
+setvar! ResearchMaterialsPrice '35000'
+setvar! ArcaneScrollPrice '30000' 
+setvar! PlantChemicalsPrice '2500' 
+setvar! phylacteryPrice '400' 
+
+//=========================================
+
+//Cores 
+if setContainerVariables == '1'
+overhead 'Set container for Aspect Cores' 2263
+setvar aspectCoreContainer
+endif
+
+while findtype 'aspect core' backpack as item
+    getlabel item label
+    if 'Air' in label
+        lift item 1
+        drop aspectCoreContainer 30 60 0
+        wait 250
+        promptresponse AirCorePrice        
+    elseif 'Artisan' in label
+        lift item 1
+        drop aspectCoreContainer 45 60 0
+        wait 250
+        promptresponse ArtisanCorePrice
+    elseif 'Blood' in label
+        lift item 1
+        drop aspectCoreContainer 60 60 0
+        wait 250
+        promptresponse BloodCorePrice
+    elseif 'Command' in label
+        lift item 1
+        drop aspectCoreContainer 75 60 0
+        wait 250
+        promptresponse CommandCorePrice
+    elseif 'Death' in label
+        lift item 1
+        drop aspectCoreContainer 90 60 0
+        wait 250
+        promptresponse DeathCorePrice
+    elseif 'Discipline' in label
+        lift item 1
+        drop aspectCoreContainer 105 60 0
+        wait 250
+        promptresponse DisciplineCorePrice
+    elseif 'Earth' in label
+        lift item 1
+        drop aspectCoreContainer 120 60 0
+        wait 250
+        promptresponse EarthCorePrice
+    elseif 'Eldritch' in label
+        lift item 1
+        drop aspectCoreContainer 135 60 0
+        wait 250
+        promptresponse EldritchCorePrice
+    elseif 'Fire' in label
+        lift item 1
+        drop aspectCoreContainer 30 80 0
+        wait 250
+        promptresponse FireCorePrice        
+    elseif 'Fortune' in label
+        lift item 1
+        drop aspectCoreContainer 45 80 0
+        wait 250
+        promptresponse FortuneCorePrice
+    elseif 'Holy' in label
+        lift item 1
+        drop aspectCoreContainer 60 80 0
+        wait 250
+        promptresponse HolyCorePrice
+    elseif 'Lyric' in label
+        lift item 1
+        drop aspectCoreContainer 75 80 0
+        wait 250
+        promptresponse LyricCorePrice
+    elseif 'Poison' in label
+        lift item 1
+        drop aspectCoreContainer 90 80 0
+        wait 250
+        promptresponse PoisonCorePrice      
+    elseif 'Shadow' in label
+        lift item 1
+        drop aspectCoreContainer 105 80 0
+        wait 250
+        promptresponse ShadowCorePrice      
+    elseif 'Void' in label
+        lift item 1
+        drop aspectCoreContainer 120 80 0
+        wait 250
+        promptresponse VoidCorePrice        
+    elseif 'Water' in label
+        lift item 1
+        drop aspectCoreContainer 135 80 0
+        wait 250
+        promptresponse WaterCorePrice       
+    endif
+    ignore item
+endwhile
+
+if setContainerVariables == '1'
+overhead 'Set container for Aspect Distillations' 2263
+setvar aspectDistillationContainer
+endif 
+
+while findtype 'flask' backpack as item
+    getlabel item label
+    if 'Air' in label
+        lift item 1
+        drop aspectDistillationContainer 25 50 0
+        wait 250
+        promptresponse AirDistillationPrice        
+    elseif 'Artisan' in label
+        lift item 1
+        drop aspectDistillationContainer 40 50 0
+        wait 250
+        promptresponse ArtisanDistillationPrice
+    elseif 'Blood' in label
+        lift item 1
+        drop aspectDistillationContainer 55 50 0
+        wait 250
+        promptresponse BloodDistillationPrice
+    elseif 'Command' in label
+        lift item 1
+        drop aspectDistillationContainer 70 50 0
+        wait 250
+        promptresponse CommandDistillationPrice
+    elseif 'Death' in label
+        lift item 1
+        drop aspectDistillationContainer 85 50 0
+        wait 250
+        promptresponse DeathDistillationPrice
+    elseif 'Discipline' in label
+        lift item 1
+        drop aspectDistillationContainer 100 50 0
+        wait 250
+        promptresponse DisciplineDistillationPrice
+    elseif 'Earth' in label
+        lift item 1
+        drop aspectDistillationContainer 115 50 0
+        wait 250
+        promptresponse EarthDistillationPrice
+    elseif 'Eldritch' in label
+        lift item 1
+        drop aspectDistillationContainer 130 50 0
+        wait 250
+        promptresponse EldritchDistillationPrice
+    elseif 'Fire' in label
+        lift item 1
+        drop aspectDistillationContainer 30 80 0
+        wait 250
+        promptresponse FireDistillationPrice        
+    elseif 'Fortune' in label
+        lift item 1
+        drop aspectDistillationContainer 45 80 0
+        wait 250
+        promptresponse FortuneDistillationPrice
+    elseif 'Holy' in label
+        lift item 1
+        drop aspectDistillationContainer 60 80 0
+        wait 250
+        promptresponse HolyDistillationPrice
+    elseif 'Lyric' in label
+        lift item 1
+        drop aspectDistillationContainer 75 80 0
+        wait 250
+        promptresponse LyricDistillationPrice
+    elseif 'Poison' in label
+        lift item 1
+        drop aspectDistillationContainer 90 80 0
+        wait 250
+        promptresponse PoisonDistillationPrice      
+    elseif 'Shadow' in label
+        lift item 1
+        drop aspectDistillationContainer 105 80 0
+        wait 250
+        promptresponse ShadowDistillationPrice      
+    elseif 'Void' in label
+        lift item 1
+        drop aspectDistillationContainer 120 80 0
+        wait 250
+        promptresponse VoidDistillationPrice        
+    elseif 'Water' in label
+        lift item 1
+        drop aspectDistillationContainer 135 80 0
+        wait 250
+        promptresponse WaterDistillationPrice       
+    endif
+    ignore item
+endwhile
+
+//Skill Scrolls
+
+if setContainerVariables == '1'
+overhead 'Set container for Skill Scrolls' 2263
+setvar skillScrollsContainer
+endif
+
+while findtype 'scroll of calling' backpack as item
+    getlabel item label
+    if 'alchemy' in label
+        lift item 1
+        drop skillScrollsContainer 15 50 0
+        wait 250
+        promptresponse AlchemyPrice     
+    elseif 'animal lore' in label
+        lift item 1
+        drop skillScrollsContainer 25 50 0
+        wait 250
+        promptresponse AnimalLorePrice        
+    elseif 'animal taming' in label
+        lift item 1
+        drop skillScrollsContainer 35 50 0
+        wait 250
+        promptresponse AnimalTamingPrice  
+    elseif 'arms lore' in label
+        lift item 1
+        drop skillScrollsContainer 45 50 0
+        wait 250
+        promptresponse ArmsLorePrice        
+    elseif 'begging' in label
+        lift item 1
+        drop skillScrollsContainer 55 50 0
+        wait 250
+        promptresponse BeggingPrice
+    elseif 'blacksmithy' in label
+        lift item 1
+        drop skillScrollsContainer 65 50 0
+        wait 250
+        promptresponse BlacksmithyPrice  
+    elseif 'camping' in label
+        lift item 1
+        drop skillScrollsContainer 75 50 0
+        wait 250
+        promptresponse CampingPrice  
+    elseif 'carpentry' in label
+        lift item 1
+        drop skillScrollsContainer 85 50 0
+        wait 250
+        promptresponse CarpentryPrice 
+    elseif 'cartography' in label
+        lift item 1
+        drop skillScrollsContainer 95 50 0
+        wait 250
+        promptresponse CartographyPrice
+    elseif 'chivalry' in label
+        lift item 1
+        drop skillScrollsContainer 105 50 0
+        wait 250
+        promptresponse ChivalryPrice
+    elseif 'cooking' in label
+        lift item 1
+        drop skillScrollsContainer 115 50 0
+        wait 250
+        promptresponse CookingPrice
+    elseif 'detect hidden' in label
+        lift item 1
+        drop skillScrollsContainer 125 50 0
+        wait 250
+        promptresponse DetectHiddenPrice
+    elseif 'discordance' in label
+        lift item 1
+        drop skillScrollsContainer 135 50 0
+        wait 250
+        promptresponse DiscordancePrice
+    elseif 'fishing' in label
+        lift item 1
+        drop skillScrollsContainer 20 70 0
+        wait 250
+        promptresponse FishingPrice
+    elseif 'forensic eval' in label
+        lift item 1
+        drop skillScrollsContainer 30 70 0
+        wait 250
+        promptresponse ForensicEvalPrice
+    elseif 'herding' in label
+        lift item 1
+        drop skillScrollsContainer 40 70 0
+        wait 250
+        promptresponse HerdingPrice
+    elseif 'inscription' in label
+        lift item 1
+        drop skillScrollsContainer 50 70 0
+        wait 250
+        promptresponse InscriptionPrice
+    elseif 'item id' in label
+        lift item 1
+        drop skillScrollsContainer 60 70 0
+        wait 250
+        promptresponse ItemIdPrice
+    elseif 'lockpicking' in label
+        lift item 1
+        drop skillScrollsContainer 70 70 0
+        wait 250
+        promptresponse LockpickingPrice
+    elseif 'lumberjacking' in label
+        lift item 1
+        drop skillScrollsContainer 80 70 0
+        wait 250
+        promptresponse LumberjackingPrice
+    elseif 'musicianship' in label
+        lift item 1
+        drop skillScrollsContainer 90 70 0
+        wait 250
+        promptresponse MusicanshipPrice
+    elseif 'mining' in label
+        lift item 1
+        drop skillScrollsContainer 100 70 0
+        wait 250
+        promptresponse MiningPrice
+    elseif 'necromancy' in label
+        lift item 1
+        drop skillScrollsContainer 110 70 0
+        wait 250
+        promptresponse NecromancyPrice
+    elseif 'peacemaking' in label
+        lift item 1
+        drop skillScrollsContainer 120 70 0
+        wait 250
+        promptresponse PeacemakingPrice
+    elseif 'poisoning' in label
+        lift item 1
+        drop skillScrollsContainer 130 70 0
+        wait 250
+        promptresponse PoisoningPrice
+    elseif 'provocation' in label
+        lift item 1
+        drop skillScrollsContainer 15 90 0
+        wait 250
+        promptresponse ProvocationPrice
+    elseif 'remove trap' in label
+        lift item 1
+        drop skillScrollsContainer 25 90 0
+        wait 250
+        promptresponse RemoveTrapPrice
+    elseif 'spirit speak' in label
+        lift item 1
+        drop skillScrollsContainer 35 90 0
+        wait 250
+        promptresponse SpiritSpeakPrice
+    elseif 'stealth' in label
+        lift item 1
+        drop skillScrollsContainer 45 90 0
+        wait 250
+        promptresponse StealthPrice
+    elseif 'tailoring' in label
+        lift item 1
+        drop skillScrollsContainer 55 90 0
+        wait 250
+        promptresponse TailoringPrice
+    elseif 'taste id' in label
+        lift item 1
+        drop skillScrollsContainer 65 90 0
+        wait 250
+        promptresponse TasteIdPrice
+    elseif 'tinkering' in label
+        lift item 1
+        drop skillScrollsContainer 75 90 0
+        wait 250
+        promptresponse TinkeringPrice
+    elseif 'tracking' in label
+        lift item 1
+        drop skillScrollsContainer 85 90 0
+        wait 250
+        promptresponse TrackingPrice
+    elseif 'veterinary' in label
+        lift item 1
+        drop skillScrollsContainer 95 90 0
+        wait 250
+        promptresponse VeterinaryPrice
+    endif  
+    ignore item  
+endwhile
+
+//Other rares
+if setContainerVariables == '1'
+overhead 'Set container for other items' 2263
+setvar otherItemsContainer
+endif
+
+while findtype 'Book of Truth' backpack as item
+    lift item 1
+    drop otherItemsContainer 45 60 0
+    wait 250
+    promptresponse MastercraftingDiagramPrice
+    ignore item
+endwhile
+
+while findtype 'void orb' backpack as item
+    lift item 1
+    drop otherItemsContainer 65 60 0
+    wait 250
+    promptresponse SkillOrbPrice
+    ignore item
+endwhile
+
+while findtype 'research materials' backpack as item
+    lift item 1
+    drop otherItemsContainer 85 60 0
+    wait 250
+    promptresponse ResearchMaterialsPrice
+    ignore item
+endwhile
+
+while findtype 'blank scroll%s%' backpack 2609 as item
+    lift item 20
+    drop otherItemsContainer 105 60 0
+    wait 250
+    promptresponse ArcaneScrollPrice
+    ignore item
+endwhile
+
+while findtype '29030' backpack as item
+    lift item 1
+    drop otherItemsContainer 125 60 0
+    wait 250
+    promptresponse PlantChemicalsPrice
+    ignore item
+endwhile
+
+//Other rares
+if setContainerVariables == '1'
+overhead 'Set container for phylactery' 2263
+setvar phylacteryContainer
+endif
+
+while findtype 'phylactery' backpack as item
+    lift item 1
+    wait 250
+    drop phylacteryContainer -1 -1 -1
+    wait 250
+    promptresponse phylacteryPrice
+    ignore item
+endwhile
+
+clearignore
+overhead 'Script Finished' 2263

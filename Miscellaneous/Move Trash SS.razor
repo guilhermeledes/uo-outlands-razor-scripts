@@ -1,0 +1,7 @@
+while findtype "scroll of calling" backpack as ss
+    getlabel ss description
+    sysmsg description 88
+    lift ss 1
+    wait 250
+    drop trash_ss
+endwhile

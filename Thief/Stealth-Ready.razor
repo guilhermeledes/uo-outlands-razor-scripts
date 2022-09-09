@@ -40,6 +40,7 @@ else
         foreach current_time in stealth_timer
             if current_time > 0
                 overhead '{{current_time}}s to stealth...'
+                sysmsg '{{current_time}}s to stealth...'
                 wait 1000
              endif
         endfor

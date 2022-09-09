@@ -1,6 +1,18 @@
-dress 'Wizard Hat'
-while mana < maxmana
+while mana > 4
+    cast 'Magic Arrow'
+    waitfortarget
+    target 0xC1A1B
     wait 500
 endwhile
-undress 'Wizard Hat'
+
+while mana < maxmana
+  useskill "meditation"
+  wait 500
+    if findbuff "actively meditating"
+        lifttype "dagger" 1
+        drop backpack
+    endif
+    wait 10000
+endwhile
+
 loop

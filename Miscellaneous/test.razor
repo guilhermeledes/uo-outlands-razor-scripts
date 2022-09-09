@@ -1,0 +1,15 @@
+removelist loot_items
+createlist loot_items
+pushlist loot_items "Long Spear"
+pushlist loot_items "war fork"
+
+foreach loot in loot_items
+    while findtype loot 0x41D028FA as item
+        getlabel item description
+        sysmsg description 88
+        overhead description 88
+        lift item 1
+        wait 250
+        drop 0x434F881C -1 -1 -1
+    endwhile
+endfor

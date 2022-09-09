@@ -1,0 +1,15 @@
+while mana > 4
+    cast 'Night Sight'
+    waitfortarget
+    target "self"
+    wait 500
+endwhile
+while mana < maxmana
+    if not findbuff "actively meditating"
+      useskill "meditation"
+      wait 3500
+    endif
+    wait 1000
+    overhead "Maditating..."
+endwhile
+loop

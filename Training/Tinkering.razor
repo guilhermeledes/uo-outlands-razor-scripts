@@ -1,0 +1,35 @@
+if not find gold_pile
+    setvar gold_pile
+endif
+
+if not timerexists "guards"
+    settimer "guards" 0
+endif
+
+if counttype "tool kit" <= 2
+    say "Chaya buy"
+    wait 250
+endif
+
+if counttype "necklace" >= 10
+    say "Chaya sell"
+    wait 1000
+    
+    lifttype "gold coin" 60000
+    wait 250
+    drop gold_pile -1 -1 -1
+    wait 1000
+
+    if findtype "gold coin" backpack
+        say "Check 50000"
+        wait 250
+    endif
+endif
+
+if timer "guards" > 5000
+    say "Guards"
+    settimer "guards" 0
+endif
+wait 250
+
+loop

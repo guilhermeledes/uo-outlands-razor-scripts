@@ -1,0 +1,93 @@
+dclick gold_chest
+wait 150
+dclick itens_to_save_bag
+wait 150
+dclick sell_chest
+wait 150
+dclick tmap_chest
+wait 150
+
+organizer 1
+while queued
+    wait 250
+endwhile
+
+organizer 2
+while queued
+    wait 250
+endwhile
+
+while findtype 5356 backpack as item
+    getlabel item description
+    sysmsg description 88
+    overhead description 88
+    lift item 60000
+    wait 250
+    drop tmap_chest 0 0 0
+endwhile
+
+removelist loot_items
+createlist loot_items
+pushlist loot_items "blank scroll%s%"
+pushlist loot_items "gold coin"
+pushlist loot_items "arrow"
+pushlist loot_items "crossbow bolt"
+
+foreach loot in loot_items
+    while findtype loot backpack as item
+        getlabel item description
+        sysmsg description 88
+        overhead description 88
+        lift item 60000
+        wait 250
+        drop gold_chest -1 -1 -1
+    endwhile
+endfor
+
+removelist itens_to_save
+createlist itens_to_save
+pushlist itens_to_save "Fortune"
+pushlist itens_to_save "Artisan"
+pushlist itens_to_save "Earth"
+
+
+removelist rare_loot
+createlist rare_loot
+ //Skill Scroll
+pushlist rare_loot "scroll of calling"
+pushlist rare_loot "aspect core"
+ //Aspect Extracts
+pushlist rare_loot "3836"
+ //MCD
+pushlist rare_loot "Book of Truth"
+pushlist rare_loot "phylactery"
+ //Plant chemical
+pushlist rare_loot "29030"
+
+foreach rare in rare_loot
+    while findtype rare backpack as item
+        getlabel item description
+        sysmsg description 88
+        overhead description 88
+        lift item 60000
+        wait 250
+        @setvar exists 0
+        foreach save in itens_to_save
+        overhead save
+        overhead description
+            if save in description
+                @setvar exists 1
+            endif
+        endfor
+        if exists = 1
+            drop itens_to_save_bag -1 -1 -1
+        else
+            drop sell_chest -1 -1 -1
+        endif
+    endwhile
+endfor
+
+script "Move Unidentified"
+while queued
+    wait 250
+endwhile

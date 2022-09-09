@@ -33,7 +33,7 @@ endif
 
 
 gumpclose
-if counttype 4032 backpack < 1 or insysmsg 'You have worn out your tool!'
+if counttype 4032 0x437378EE < 1 or insysmsg 'You have worn out your tool!'
     restock 4
     wft
     targettype "a pack llama" ground
@@ -42,7 +42,7 @@ endif
 if counttype "cut cloth" backpack < min_cloth
     if not findtype "wizard's hat" backpack
         overhead "No cloth"
-        say "Frida buy"
+        say "Mercer buy"
         wait 1000
         dclicktype "scissors" backpack
         wft
@@ -73,7 +73,7 @@ if counttype 'blank scroll%s%' backpack < min_blankscrolls
     targettype "a pack llama" ground
     gumpclose
 endif
-dclicktype 4032 backpack
+dclicktype 4032 0x437378EE
 waitforgump 949095101 5000
 if skill 'Inscription' < skillcap
     if skill 'Inscription' < 60

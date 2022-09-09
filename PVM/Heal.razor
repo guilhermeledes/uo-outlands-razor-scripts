@@ -1,0 +1,181 @@
+# Lazy Ass Dexxer Script by SingSingFan v1.02
+# UO Outlands
+# One Script to Rule them all
+
+
+// Updated to add drink refresh pots and drink str pots when u reach max weight
+// Heal pots will also be on cooldown after using and will not be spammed
+if not timerexists "aids"
+    createtimer "aids"
+    settimer "aids" 16000
+endif
+
+if not timerexists "healpot"
+    createtimer "healpot"
+    settimer "healpot" 11000
+endif
+
+ //initiate Combat and attack closest
+  //non friendly with priority to PVP
+  warmode "on"
+  hotkey "Set Last Target"
+  hotkey "Target Closest Non-Friendly Monster"
+  hotkey "Next Murderer Player Target"
+  hotkey "Attack Last Target"
+  hotkey "Attack Last Combatant"
+  wait 250
+  
+while hp > 1
+    
+
+  //////////////////////START OF HEALING MODULE///////////////////////////////
+  
+  //Bandaging Sequence from Jaseowns
+  
+  if not hidden
+    if insysmsg "You finish applying the bandages"
+        settimer "aids" 16000
+    elseif insysmsg "but they barely help"
+        settimer "aids" 16000
+    endif
+
+    if findtype "clean bandage%s%" backpack
+        if hits < maxhits or poisoned 
+           if timer "aids" >= 16000
+                hotkey "Bandage Self"
+                wait 500
+                if insysmsg "begin applying"
+                    wait 500
+                    settimer "aids" 0
+                endif
+            endif
+        endif
+    else
+        overhead "No aids!" 34
+    endif
+    wait 500 
+  endif
+    
+  //poison removal sequence
+  if poisoned and hp > 50
+      overhead "Cleansing Poison With Fire"
+      wait 500
+      say '[CleanseByFire'
+      wait 250
+  endif
+  
+  if poisoned and hp < 51
+      overhead "Emergency Poison Removal Activated"
+      say '[HolyLight'
+      wait 250
+      if findtype "Orange Potion" backpack and poisoned
+          hotkey "Arm/Disarm Left Hand"
+          wait 250
+          while poisoned
+              hotkey "Drink Cure"
+              wait 250
+          endwhile
+          hotkey "Arm/Disarm Left Hand"
+          wait 250
+      endif
+  endif
+  
+  //Reduce Bleed Damage
+  if findbuff "bleed"
+    overhead "Bleed Detected.  Attempting to close wounds."
+    wait 500
+    say '[closewounds'
+  endif
+  
+  //Reduce Disease Damage
+  if findbuff "disease"
+    overhead "You got diseased.  EEW.  Closing Wounds."
+    wait 500
+    say '[closewounds'
+  endif
+  
+  //Emergency Heal Sequence
+  if hp < 45
+      say '[holylight'
+      wait 500
+      
+      if hp < 45
+          say '[NobleSacrifice'
+          wait 300
+          target self
+          wait 500
+          
+          if hp < 45
+              if timer "healpot" >= 11000 and findtype "Yellow Potion" backpack              
+                hotkey "Arm/Disarm Left Hand"
+                wait 250
+                hotkey 'Drink Heal'
+                wait 250
+                settimer "healpot" 0
+              endif
+          endif
+      endif
+  endif
+
+  //////////////////////END OF HEALING MODULE///////////////////////////////
+  
+  //////////////////////GEAR AND BUFF CHECK MODULE///////////////////////////////
+
+  
+  //check for food buffs
+  if not findbuff "food satisfaction" and findtype "tray" backpack as food
+    dclick food
+    wait 500
+  endif
+
+  //check for camping buff
+  if not findbuff "camp" and skill "Camping" > 39
+    overhead "Need to go Camping!!!"
+  endif
+  
+  //check for low stamina
+  if stam < 81 and findtype "Red Potion" backpack  
+      hotkey 'Drink Refresh'
+  endif
+  
+  //if overweight use str pot
+  if str = 100 and findtype "White Potion" backpack  
+      hotkey 'Drink Strength'
+  endif
+  
+  if dex = 100 and findtype "Blue Potion" backpack  
+      hotkey 'Drink Agility'
+  endif
+
+  //check and equip shield if no shield equipped.
+  if lhandempty and skill 'parrying' > 79
+    overhead 'Attempting to Equip Shield' 33
+    wait 250
+    hotkey "Arm/Disarm Left Hand"
+    wait 250
+  endif
+
+  //////////////////////GEAR AND BUFF CHECK MODULE///////////////////////////////
+
+  //////////////////////COMBAT MODULE///////////////////////////////
+  
+  //Shadow Weapon Proc Re-engage
+  if hidden
+     overhead "Shadow Mode Activated: Re-engaging"
+     warmode "on"
+     hotkey "Set Last Target"
+     hotkey "Target Closest Non-Friendly Monster"
+     hotkey "Attack Last Target"
+     hotkey "Attack Last Combatant"
+ 
+     clearsysmsg 
+  endif
+  
+  //remove Para
+  if insysmsg 'you cannot move' or insysmsg 'You must wait before using this command again'
+       say '[pouch'
+  endif
+ 
+  //////////////////////COMBAT MODULE///////////////////////////////
+  
+endwhile

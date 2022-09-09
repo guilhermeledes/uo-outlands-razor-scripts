@@ -6,7 +6,7 @@ while findtype "iron ore" backpack as ore
         overhead "No forge near"
         stop
     endif
-    overhead "Smeled {{desc}}"
+    sysmsg "Smelted {{desc}}"
     @ignore ore
 endwhile
 @clearignore 

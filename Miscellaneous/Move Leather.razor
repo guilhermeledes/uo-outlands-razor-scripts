@@ -1,0 +1,27 @@
+overhead "Moving leather..."
+
+if not varexist leather_storage
+    overhead "Select container to store the leather in"
+    @setvar leather_storage
+endif
+
+while findtype "cut up leather" backpack as item
+    getlabel item description
+    sysmsg description 88
+    overhead description 88
+    lift item 60000
+    wait 250
+    drop leather_storage -1 -1 -1
+endwhile
+
+while queued
+    overhead "Moving leather..."
+    wait 250
+endwhile
+
+while findtype "cut up leather" leather_storage as current_leather
+    getlabel current_leather desc
+    sysmsg desc
+    @ignore current_leather
+endwhile
+@clearignore 
