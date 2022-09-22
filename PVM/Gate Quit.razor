@@ -1,10 +1,20 @@
-if findtype "blue moongate" ground as gate
+if findtype "blue moongate" ground -1 -1 2 as gate
     dclick gate
     waitforgump 3773199800
-    wait 150
     gumpresponse 2
     stop
 endif
+if findtype "moongate" ground -1 -1 2 as gate
+    dclick gate
+    waitforgump 3899019871
+    gumpresponse 2
+    stop
+endif
+if findtype "27754" ground -1 -1 2 as gate
+    dclick gate
+    stop
+endif
+
 wait 250
 overhead "Gate not Found"
 loop
