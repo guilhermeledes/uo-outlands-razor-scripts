@@ -1,4 +1,5 @@
 if not find gold_pile
+    overhead "Select a gold pile in your bankbox"
     setvar gold_pile
 endif
 
@@ -20,7 +21,7 @@ if counttype "necklace" >= 10
     drop gold_pile -1 -1 -1
     wait 1000
 
-    if findtype "gold coin" backpack
+    if findtype "gold coin" backpack and find gold_pile
         say "Check 50000"
         wait 250
     endif
