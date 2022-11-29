@@ -1,0 +1,11 @@
+if findtype 'runetome' as tome
+    if findtype "recall rune" backpack 2882 as rune
+        cast 'Mark'
+        waitfortarget
+        target rune
+        wait 500
+        lifttype "recall rune" 1 backpack 0
+        drop tome -1 -1 0
+        script "Miscellaneous\Recall Escape"
+    endif
+endif

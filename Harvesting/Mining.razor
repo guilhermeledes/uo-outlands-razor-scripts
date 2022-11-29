@@ -79,8 +79,8 @@ if inlist "miner_actions" "red_alert"
         useskill "Hiding"
     endif
     poplist "miner_actions" "red_alert"
-    overhead "Stopping script..." 34
-    stop
+    //overhead "Stopping script..." 34
+    //stop
 endif
 
 if diffhits >= 10
@@ -96,6 +96,7 @@ endif
 if diffweight <= 30
     if diffweight <= 30
         overhead "Too heavy... Go to smelt some ores" 34
+        organizer 1
         replay
     endif
 endif

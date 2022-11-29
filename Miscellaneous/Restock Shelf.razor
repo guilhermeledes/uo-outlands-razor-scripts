@@ -1,0 +1,17 @@
+if not varexist storage_supply
+    @setvar storage_supply
+endif
+
+if counttype "White Potion" >= 25
+    overhead "Restocking Storage Shelf"
+    dclicktype "storage shelf" ground
+    waitforgump 3232825965
+    gumpresponse 4
+    waitfortarget
+    target storage_supply
+    waitforgump 3232825965
+    gumpclose
+endif
+wait 1000
+
+loop

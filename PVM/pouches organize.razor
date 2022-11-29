@@ -1,0 +1,26 @@
+@clearignore 
+@setvar hiden_pouch 0
+
+if findtype pouch backpack 0 as brown
+if findtype rope backpack 2799 as corda
+    while findtype pouch brown 38 as red
+        if hiden_pouch = 0
+            @setvar hiden_pouch 1
+            hotkey "set organizer hotbag-01"
+            wft 5000
+            target red
+        endif
+        lift red 1
+        wait 100
+        drop brown 91 94 0
+        @ignore red
+    endwhile
+        lift corda 1
+        wait 100
+        drop brown 94 91 0
+else
+    overhead "no rope found"
+endif
+else
+    overhead "no pouch found"
+endif

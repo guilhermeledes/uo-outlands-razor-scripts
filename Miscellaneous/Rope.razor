@@ -1,1 +1,6 @@
-say "[rope"
+if skill "magery" >= 50
+    cast 'Teleport'
+endif
+if findtype "rope" backpack
+    say '[rope'
+endif

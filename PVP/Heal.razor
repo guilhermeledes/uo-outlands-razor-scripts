@@ -1,0 +1,162 @@
+# Lazy Ass Dexxer Script by SingSingFan v1.02
+# UO Outlands
+# One Script to Rule them all
+
+
+// Updated to add drink refresh pots and drink str pots when u reach max weight
+// Heal pots will also be on cooldown after using and will not be spammed
+if not timerexists "aids"
+    createtimer "aids"
+    settimer "aids" 16000
+endif
+
+if not timerexists "healpot"
+    createtimer "healpot"
+    settimer "healpot" 11000
+endif
+
+
+  //////////////////////START OF COMBAT MODULE///////////////////////////////
+
+  //initiate Combat and attack closest
+  //non friendly with priority to PVP
+  warmode "on"
+  hotkey "Set Last Target"
+  hotkey "Target Closest Non-Friendly Monster"
+  hotkey "Next Murderer Player Target"
+  hotkey "Attack Last Target"
+  hotkey "Attack Last Combatant"
+  wait 250
+
+ 
+  //////////////////////END OF COMBAT MODULE///////////////////////////////
+
+  
+while hp > 1
+    
+  
+  //remove Para
+  if insysmsg 'you cannot move' or insysmsg 'You must wait before using this command again'
+       say '[pouch'
+  endif
+  
+  
+  //////////////////////START OF HEALING MODULE///////////////////////////////
+  
+  //Bandaging Sequence from Jaseowns
+  
+  if not hidden
+    if insysmsg "You finish applying the bandages"
+        settimer "aids" 16000
+    elseif insysmsg "but they barely help"
+        settimer "aids" 16000
+    endif
+
+    if findtype "clean bandage%s%" backpack
+        if hits < maxhits or poisoned 
+           if timer "aids" >= 16000
+                hotkey "Bandage Self"
+                wait 500
+                if insysmsg "begin applying"
+                    wait 500
+                    settimer "aids" 0
+                endif
+            endif
+        endif
+    else
+        overhead "No aids!" 34
+    endif
+    wait 500 
+  endif
+  
+  if poisoned and hp < 51
+      if findtype "Orange Potion" backpack
+          hotkey "Arm/Disarm Left Hand"
+          wait 250
+          while poisoned
+              hotkey "Drink Cure"
+              wait 250
+          endwhile
+          hotkey "Arm/Disarm Left Hand"
+          wait 250
+      else
+          overhead "Out of Cure pots" 34
+      endif
+  endif
+  
+  //Emergency Heal Sequence
+  if hp < 45 and timer "healpot" >= 11000 
+      if findtype "Yellow Potion" backpack              
+        hotkey "Arm/Disarm Left Hand"
+        wait 250
+        hotkey 'Drink Heal'
+        wait 250
+        settimer "healpot" 0
+      else
+        overhead "Out of Heal pots" 34
+      endif
+  endif
+
+  //////////////////////END OF HEALING MODULE///////////////////////////////
+  
+  //////////////////////GEAR AND BUFF CHECK MODULE///////////////////////////////
+
+  
+  //check for food buffs
+  if not findbuff "food satisfaction" and findtype "tray" backpack as food
+    dclick food
+    wait 500
+  endif
+
+  //check for camping buff
+  if not findbuff "camp" and skill "Camping" > 39
+    overhead "Need to go Camping!!!"
+  endif
+  
+  //check for low stamina
+  if stam < 81 
+      if findtype "Red Potion" backpack  
+          hotkey 'Drink Refresh'
+      else
+          overhead "Out of Refresh pots" 34
+      endif
+  endif
+  
+  //if overweight use str pot
+  if str = 100 
+      if findtype "White Potion" backpack  
+          hotkey 'Drink Strength'
+      else
+          overhead "Out of Strength pots" 34
+      endif
+  endif
+  
+  if dex = 100 
+      if findtype "Blue Potion" backpack  
+          hotkey 'Drink Agility'
+      else
+          overhead "Out of Agility pots" 34
+      endif
+  endif
+  
+  if not findbuff "magic resist" 
+      if findtype "Black Potion" backpack
+          hotkey 'Drink Night Sight'
+      else
+          overhead "Out of Magic Resist pots" 34
+      endif
+  endif
+
+
+  //check and equip shield if no shield equipped.
+  if lhandempty and skill 'parrying' > 79
+    overhead 'Attempting to Equip Shield' 33
+    wait 250
+    hotkey "Arm/Disarm Left Hand"
+    wait 250
+  endif
+
+  //////////////////////GEAR AND BUFF CHECK MODULE///////////////////////////////
+
+  
+endwhile

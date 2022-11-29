@@ -1,0 +1,19 @@
+# Name: Hiding and Stealth training
+# Author: Guilherme Ledes
+# Requirements:  Any NPC
+# Hint: 
+#   0-50 Vendor
+#   50-75 Run script inside the new players dungeon at Shelter Island
+#   when you reach 80 hiding, go back to new players dungeon at Shelter Island to screase stealth skillgain until 75
+
+@setvar! skillcap 100
+
+if skill 'Hiding' = skillcap and skill 'Stealth' = skillcap
+  overhead 'Congratulations you have finished your training time!'
+  stop
+endif
+
+useskill 'Hiding'
+wait 11000
+
+loop

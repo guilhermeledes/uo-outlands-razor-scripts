@@ -1,15 +1,94 @@
-removelist loot_items
-createlist loot_items
-pushlist loot_items "Long Spear"
-pushlist loot_items "war fork"
-
-foreach loot in loot_items
-    while findtype loot 0x41D028FA as item
-        getlabel item description
-        sysmsg description 88
-        overhead description 88
-        lift item 1
+clearignore 
+while findtype "5356" backpack as map
+    getlabel map desc
+    if '100.0%' in desc
+        overhead desc
+        lift map 1
         wait 250
-        drop 0x434F881C -1 -1 -1
-    endwhile
-endfor
+        if 'plainly' in desc
+            drop tmap_chest 18 159 0
+        elseif 'expertly' in desc
+            drop tmap_chest 32 159 0
+        elseif 'adeptly' in desc
+            drop tmap_chest 46 159 0
+        elseif 'cleverly' in desc
+            drop tmap_chest 60 159 0
+        elseif 'deviously' in desc
+            drop tmap_chest 74 159 0
+        elseif 'ingeniously' in desc
+            drop tmap_chest 88 159 0
+        elseif 'dullscale' in desc
+            drop tmap_chest 18 105 0
+        elseif 'shadowscale' in desc
+            drop tmap_chest 32 105 0
+        elseif 'copperscale' in desc
+            drop tmap_chest 46 105 0
+        elseif 'bronzescale' in desc
+            drop tmap_chest 60 105 0
+        elseif 'goldenscale' in desc
+            drop tmap_chest 74 105 0
+        elseif 'rosescale' in desc
+            drop tmap_chest 88 105 0
+        elseif 'verescale' in desc
+            drop tmap_chest 102 105 0
+        elseif 'valescale' in desc
+            drop tmap_chest 116 105 0
+        elseif 'avarscale' in desc
+            drop tmap_chest 130 105 0
+        elseif 'dullwood' in desc
+            drop tmap_chest 18 113 0
+        elseif 'shadowwood' in desc
+            drop tmap_chest 32 113 0
+        elseif 'copperwood' in desc
+            drop tmap_chest 46 113 0
+        elseif 'bronzewood' in desc
+            drop tmap_chest 60 113 0
+        elseif 'goldenwood' in desc
+            drop tmap_chest 74 113 0
+        elseif 'rosewood' in desc
+            drop tmap_chest 88 113 0
+        elseif 'verewood' in desc
+            drop tmap_chest 102 113 0
+        elseif 'valewood' in desc
+            drop tmap_chest 116 113 0
+        elseif 'avarwood' in desc
+            drop tmap_chest 130 113 0
+        elseif 'dullhide' in desc
+            drop tmap_chest 18 144 0
+        elseif 'shadowhide' in desc
+            drop tmap_chest 32 144 0
+        elseif 'copperhide' in desc
+            drop tmap_chest 46 144 0
+        elseif 'bronzehide' in desc
+            drop tmap_chest 60 144 0
+        elseif 'goldenhide' in desc
+            drop tmap_chest 74 144 0
+        elseif 'rosehide' in desc
+            drop tmap_chest 88 144 0
+        elseif 'verehide' in desc
+            drop tmap_chest 102 144 0
+        elseif 'valehide' in desc
+            drop tmap_chest 116 144 0
+        elseif 'avarhide' in desc
+            drop tmap_chest 130 144 0
+        elseif 'dull copper' in desc
+            drop tmap_chest 18 128 0
+        elseif 'shadow iron' in desc
+            drop tmap_chest 32 128 0
+        elseif 'copper' in desc
+            drop tmap_chest 46 128 0
+        elseif 'bronze' in desc
+            drop tmap_chest 60 128 0
+        elseif 'gold' in desc
+            drop tmap_chest 74 128 0
+        elseif 'agapite' in desc
+            drop tmap_chest 88 128 0
+        elseif 'verite' in desc
+            drop tmap_chest 102 128 0
+        elseif 'valorite' in desc
+            drop tmap_chest 116 128 0
+        elseif 'avarite' in desc
+            drop tmap_chest 130 128 0
+        endif
+     endif
+endwhile

@@ -1,0 +1,8 @@
+overhead 'mini heal'
+if insysmsg 'you cannot move' or insysmsg 'You must wait before using this command again'
+    say '[pouch'
+    wait 50
+endif
+if hp < maxhp
+    hotkey '> Mini-Heal/Cure Self'
+endif

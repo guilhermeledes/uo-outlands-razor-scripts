@@ -1,0 +1,35 @@
+cast 'explosion'
+waitfortarget
+target 'last'
+wait 500
+
+if findtype "Purple Potion" backpack
+    cast 'telekinesis'
+    waitfortarget
+    target 'last'
+    wait 100
+
+    overhead '** Greater Explosion **' 76 'self'
+    hotkey 'drink explosion'
+    waitfortarget
+    target 'last'
+    wait 100
+endif
+
+cast 'mind blast'
+waitfortarget
+target 'last'
+wait 500
+
+cast 'lightning'
+waitfortarget
+target 'last'
+wait 500
+
+cast 'magic arrow'
+waitfortarget
+target 'last'
+
+cast 'magic arrow'
+waitfortarget
+target 'last'

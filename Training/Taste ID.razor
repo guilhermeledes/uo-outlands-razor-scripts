@@ -1,9 +1,13 @@
-useskill 'TasteId'
-waitfortarget
-targettype 0x0 0 0
-wait 10500
-if int >= 30
-    hotkey "toggle peace only"
-    wait 200
+if not timerexists "taste"
+    createtimer "taste"
+    settimer "taste" 16000
 endif
+
+if timer 'taste' >= 10500
+    useskill 'TasteId'
+    waitfortarget
+    targetrelloc 0 0
+    settimer 'taste' 0
+endif
+
 loop

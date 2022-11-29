@@ -8,19 +8,15 @@
 
 @setvar! skillcap 100
 
-if not varexist myEvalTarget
-    overhead 'Select target to eval'
-    @setvar! myEvalTarget
+if skill evalint < skillcap
+    skill evalint
+    wft 1000
+    hotkey "target random friendly"
+    wait 2500
+    gumpclose
 else
-    if skill evalint < skillcap
-        skill evalint
-        wft 1000
-        target myEvalTarget
-        wait 2500
-        gumpclose
-    else
-      overhead 'Congratulations you have finished your training time!'
-      stop
-    endif
+  overhead 'Congratulations you have finished your training time!'
+  wait 5000
 endif
+
 loop

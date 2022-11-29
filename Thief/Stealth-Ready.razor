@@ -1,13 +1,9 @@
 # Name: Begin to Hiding than Stealth or Stealth when ready
-# Author: Guilherme Ledes
-# Description: 
-#   Use only one hotkey to hide and stealth, and don't lose any step when stealthing any more,
-#   with this script you'll automaticaly begin to stealth only after you do your last available step.
-# Hint: 
+# Author: Guilherme Ledes (Inspired by first Jaseowns thief live stream)
+# Description: Use only one hotkey to hide and stealth, and don't lose any step when stealthing any more, with this script you'll automaticaly begin to stealth only after you do your last available step.
+# Hint:
 #   - Disable auto-stealth
-#   - Add the following overheadmessages to your stealther character's profile
-#   - C:\Program Files (x86)\Ultima Online Outlands\ClassicUO\Data\Plugins\Assistant\Profiles\stealther_profile.xml
-#   <overheadmessages>
+#   - Add these "overheadmessage" to help you to follow what is going on:
 #      <overheadmessage searchtext="You feel comfortable enough to begin stealthing" message="READY" hue="68" />
 #      <overheadmessage searchtext="You begin to move quietly" message="GO" hue="68" />
 #      <overheadmessage searchtext="You have 4 stealth" message="LAST STEPS" hue="43" />
@@ -18,15 +14,8 @@
 #      <overheadmessage searchtext="You have been revealed" message="REVEALED" hue="33" />
 #      <overheadmessage searchtext="You feel ready to continue stealth" message="READY" hue="68" />
 #      <overheadmessage searchtext="You must hide first" message="NOT HIDDEN" hue="33" />
-#   </overheadmessages>
+ 
 
-removelist stealth_timer
-if not listexists stealth_timer
-    createlist stealth_timer
-    for 11
-        pushlist stealth_timer index front
-    endfor
-endif
 if hidden
     overhead 'Beging stealth when READY'
     waitforsysmsg 'You feel ready to continue stealthing.'
@@ -36,15 +25,9 @@ if hidden
 else
     skill 'Hiding'
     wait 200
-    if not insysmsg "You must wait a few moments to use another skill."
-        foreach current_time in stealth_timer
-            if current_time > 0
-                overhead '{{current_time}}s to stealth...'
-                sysmsg '{{current_time}}s to stealth...'
-                wait 1000
-             endif
-        endfor
-        skill 'Stealth'
-    endif
+    for 10
+        overhead 'Waiting to stealth...'
+        wait 1000
+    endfor
+    skill 'Stealth'
 endif
-clearsysmsg 

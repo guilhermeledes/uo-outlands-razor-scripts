@@ -1,0 +1,23 @@
+gumpclose
+
+if not timerexists "sell"
+    settimer "sell" 0
+endif
+
+if timer "sell" > 5000
+    say 'RM 35k - Plant Chemical 2.5k - Command Core 35k - Lyric Core 24k - Skill Scrolls and MORE - G3P Shop'
+    settimer "sell" 0
+endif
+
+if not timerexists "gate"
+    settimer "gate" 0
+endif
+
+if timer "gate" > 31000
+    say '[sacredjourney'
+    waitforgump 1482653814
+    gumpresponse 4
+    settimer "gate" 0
+endif
+wait 250
+loop

@@ -5,7 +5,7 @@
 # Shelf loadout: needs to have iron lockpick tools and iron trap tools
 
 if findtype "strong box" backpack
-    if skill "Lockpicking" < 102
+    if skill "Lockpicking" < 100
         overhead 'Lockpicking' 88
         if findtype "lockpicks" backpack
             dclicktype "lockpicks" backpack
@@ -23,7 +23,7 @@ if findtype "strong box" backpack
     endif
 
     
-    if skill "Remove Trap" < 101
+    if skill "Remove Trap" < 100
         overhead 'Remove trap' 88
         if findtype "drill" backpack
             dclicktype "drill" backpack

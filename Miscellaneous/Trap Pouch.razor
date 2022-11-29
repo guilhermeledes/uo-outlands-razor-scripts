@@ -1,0 +1,22 @@
+if findtype 'pouch' backpack 0 as pouch
+    cast 'magic trap'
+    wft 5000
+    target pouch
+    wait 500
+else
+    overhead 'No pouches found to trap'
+    stop
+endif
+
+if mana < 6 and not findbuff "actively meditating"
+  while mana < maxmana
+    if not findbuff "actively meditating"
+      useskill "meditation"
+      wait 3500
+    endif
+    wait 1000
+    overhead 'Meditating...'
+  endwhile
+endif
+
+loop

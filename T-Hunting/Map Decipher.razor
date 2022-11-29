@@ -1,65 +1,65 @@
-#°º¤ø,¸¸,øThe Siv Scriptsø¤°º¤ø,¸¸
-#decode maps in your backpack
-#uses spyglass in backpack
-clearignore
-#close extra gumps
-for 5
-     gumpclose
-endfor
-#create list for maps
-if not listexists 'maps'
-    createlist 'maps'
-endif
-clearlist 'maps'
-#make a list of undeciphered maps
-while findtype 5356 backpack as 'check_map'
-    overhead "Indexing maps..."
-    getlabel 'check_map' 'map_label'
-    if undeciphered in 'map_label'
-        overhead "Adding map to index..."
-        pushlist 'maps' 'check_map'
-        ignore 'check_map'
-    else 
-        ignore 'check_map'
-    endif
-endwhile
-#decode each map
-foreach map in 'maps'
-    getlabel 'map' 'map_progress'
-    if 'undeciphered' in 'map_progress'
-        #overhead 'Map is undeciphered!' 55
-        if findtype 'spyglass' backpack
-            usetype 'spyglass'
-            waitfortarget 
-            target 'map'
-            waitforgump 'any'
+dclick tmap_chest
+wait 150
+lift tmap_bag 1
+wait 250
+drop backpack 0 0 0
+dclick tmap_bag
+wait 500
+
+@clearignore
+overhead "Start to decipher maps..."
+
+if findtype 'spyglass' backpack 2213 as colored_spy
+if findtype 'spyglass' backpack 0 as iron_spy
+
+    while findtype 5356 backpack as map
+        gumpclose
+        getlabel map 'map_progress'
+        overhead 'deciphering: {{map_progress}}' 55
+
+        dclick iron_spy
+        wft 5000
+        target map
+        waitforgump 'any'
+        gumpresponse 4
+        for 1000
+            if '80.0%' in map_progress or insysmsg "you have reached the maximum accuracy"
+                break
+            endif
+            getlabel map 'map_progress'
             gumpresponse 4
-         else 
-             overhead "No Spyglass!" 33
-         endif
-         while not insysmsg 'you have reached'
-                gumpresponse 4
-                wait 1750
-                if insysmsg 'do not have any spyglasses of that'
-                    gumpclose
-                    wait 500
-                    if findtype 'spyglass' backpack
-                        dclicktype 'spyglass'
-                        waitfortarget 300
-                        target 'map'
-                        waitforgump 'any'
-                        gumpresponse 4
-                        wait 1750
-                    else 
-                        overhead "No spyglass!" 55
-                    stop
-                    endif
-                endif
-         endwhile
-         overhead 'Map decoded! Give me another!' 44
-     endif     
-endfor
-gumpclose
-removelist 'maps'
-overhead "All maps decoded!" 55
-clearignore
+            wait 1750
+        endfor
+
+        gumpclose
+
+        dclick colored_spy
+        wft 5000
+        target map
+        waitforgump 'any'
+        gumpresponse 4
+        for 1000
+            if '100.0%' in map_progress or insysmsg "you have reached the maximum accuracy"
+                break
+            endif
+            getlabel map 'map_progress'
+            gumpresponse 4
+            wait 1750
+        endfor
+
+        @ignore map
+    endwhile
+
+    gumpclose
+    overhead "All maps decoded!" 55
+    @clearignore
+    script "Map Organizer"
+
+else 
+    overhead "No colored spyglass!" 55
+    stop
+endif 
+else 
+    overhead "No iron spyglass!" 55
+    stop
+endif 

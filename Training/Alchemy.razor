@@ -1,92 +1,49 @@
-if not varexist pick_keg
-    @setvar! pick_keg 0
+if not varexist storage_chest
+    @setvar storage_chest
 endif
 
-if findtype "a pack llama" ground any any 2 as llama
-    @setvar! stock_llama llama
+if not varexist empty_keg_chest
+    @setvar empty_keg_chest
 endif
 
-if insysmsg "crafting queue complete"
-    wait 2000
-    gumpresponse 7
-    waitforgump 453554062
-    clearsysmsg
-endif
-
-if counttype "empty bottle%s%" < 10
-    if findtype "empty bottle%s%" stock_llama 0 as empty_bottle
-      lift empty_bottle 100
-      wait 250
-      drop backpack
-      wait 1000
-    else
-    overhead "Need more empty bottles!"
-      stop
-    endif
-endif
-
-if pick_keg = 1 and counttype "keg" backpack 0 = 0
-    if findtype "keg" stock_llama 0 as empty_keg
-      lift empty_keg 1
-      wait 250
-      drop backpack
-      wait 1000
-    else
-      overhead "Need more empty kegs!"
-      stop
-    endif
-      @setvar! pick_keg 0
-endif
-
-if counttype "mortar and pestle" backpack < 1 or insysmsg 'You have worn out your tool!'
+if not findtype "keg" backpack
     restock 1
-    wft
-    targettype "a pack llama" ground
+    waitfortarget 300
+    target empty_keg_chest
     wait 1000
 endif
 
-if skill 'Alchemy' < 75
-    if counttype "Spider's Silk" backpack < 3
-      restock 2
-      wft 1000
-      targettype "a pack llama" ground
-      wait 250
+while findtype "keg" backpack as keg
+    getlabel keg desc
+    if "completely" in desc
+            organizer 1
+            waitfortarget 300
+            target storage_chest
+            wait 1000
+            restock 1
+            waitfortarget 300
+            target empty_keg_chest
+            wait 1000
     endif
-    if findtype "keg" backpack 1109 as black_keg
-        getlabel black_keg desc
-        if "The keg is completely full." in desc
-            overhead desc
-            lift black_keg 1
-            wait 250
-            if findtype "barrel" ground as trash
-                drop trash
-            endif
-            @setvar! pick_keg 1
-        endif
-    elseif counttype "keg" backpack 0 = 0
-        @setvar! pick_keg 1
-    endif
-elseif skill 'Alchemy' >= 75
-    if counttype "Nightshade" backpack < 10
-      restock 3
-      wft 1000
-      targettype "a pack llama" ground
-      wait 1000
-    endif
-    if findtype "keg" backpack 363 as green_keg
-        getlabel green_keg desc
-        if "The keg is completely full." in desc
-            overhead desc
-            lift green_keg 1
-            wait 250
-            if findtype "wooden chest" ground 0 as trash
-                drop trash
-            endif
-            @setvar! pick_keg 1
-        endif
-    elseif counttype "keg" backpack 0 = 0
-        @setvar! pick_keg 1
-    endif
+endwhile
+
+wait 3000
+
+if findtype "Green Potion" backpack as potion
+    hotkey 'Set Last Target'
+    waitfortarget 300
+    targettype "keg" backpack
+    lift potion 25
+    drop lasttarget 0 0 0
+    wait 500
+elseif findtype "Black Potion" backpack as potion
+    hotkey 'Set Last Target'
+    waitfortarget 300
+    targettype "keg" backpack
+    lift potion 25
+    drop lasttarget 0 0 0
+    wait 500
 endif
+
 hotkey "clear drag/drop queue"
 loop

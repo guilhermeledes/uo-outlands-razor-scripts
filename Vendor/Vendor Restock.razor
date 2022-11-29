@@ -9,80 +9,85 @@ overhead 'Loading prices, please wait...' 2263
 
 //=========================================
 //Change this parameter value to 0 if you don't want to set target containers every time
-setvar! setContainerVariables '1'
+setvar! setContainerVariables 0
 
 //=========================================
 //Set your prices here:
     
+
+@setvar! AgapitePrice '2500'
+@setvar! VeritePrice '4500'
+
+    
 //Cores
 setvar! AirCorePrice '15000'
 setvar! ArtisanCorePrice '20000'
-setvar! BloodCorePrice '5000'
-setvar! CommandCorePrice '35000'
+setvar! BloodCorePrice '3000'
+setvar! CommandCorePrice '37000'
 setvar! DeathCorePrice '2500'
 setvar! DisciplineCorePrice '2500'
 setvar! EarthCorePrice '3000'
-setvar! EldritchCorePrice '5000'
-setvar! FireCorePrice '2500'
+setvar! EldritchCorePrice '7500'
+setvar! FireCorePrice '3000'
 setvar! FortuneCorePrice '19500'
 setvar! HolyCorePrice '2500'
-setvar! LyricCorePrice '24000'
-setvar! PoisonCorePrice '12000'
+setvar! LyricCorePrice '22998'
+setvar! PoisonCorePrice '11000'
 setvar! ShadowCorePrice '3000'
-setvar! VoidCorePrice '6500'
+setvar! VoidCorePrice '8000'
 setvar! WaterCorePrice '2500'
 
 //Distillations
 setvar! AirDistillationPrice '22000'
 setvar! ArtisanDistillationPrice '20000'
 setvar! BloodDistillationPrice '8000'
-setvar! CommandDistillationPrice '10000'
+setvar! CommandDistillationPrice '14000'
 setvar! DeathDistillationPrice '7000'
-setvar! DisciplineDistillationPrice '4000'
+setvar! DisciplineDistillationPrice '3500'
 setvar! EarthDistillationPrice '5000'
 setvar! EldritchDistillationPrice '10000'
 setvar! FireDistillationPrice '6000'
 setvar! FortuneDistillationPrice '15000'
 setvar! HolyDistillationPrice '7500'
 setvar! LyricDistillationPrice '15000'
-setvar! PoisonDistillationPrice '27000'
+setvar! PoisonDistillationPrice '26500'
 setvar! ShadowDistillationPrice '9000'
 setvar! VoidDistillationPrice '10000'
-setvar! WaterDistillationPrice '7000'
+setvar! WaterDistillationPrice '4500'
 
 //Skill Scrolls
 setvar! AlchemyPrice '12000'
-setvar! AnimalLorePrice '10000'
-setvar! AnimalTamingPrice '10000'
+setvar! AnimalLorePrice '8000'
+setvar! AnimalTamingPrice '9000'
 setvar! ArmsLorePrice '7500'
 setvar! BeggingPrice '7500'
-setvar! BlacksmithyPrice '10000'
-setvar! CampingPrice '10000'
+setvar! BlacksmithyPrice '8500'
+setvar! CampingPrice '7500'
 setvar! CarpentryPrice '7500'
-setvar! CartographyPrice '10000'
-setvar! ChivalryPrice '10000'
-setvar! CookingPrice '10000'
-setvar! DetectHiddenPrice '10000'
-setvar! DiscordancePrice '10000'
-setvar! FishingPrice '10000'
+setvar! CartographyPrice '8000'
+setvar! ChivalryPrice '18500'
+setvar! CookingPrice '7500'
+setvar! DetectHiddenPrice '8000'
+setvar! DiscordancePrice '8500'
+setvar! FishingPrice '7500'
 setvar! ForensicEvalPrice '10000'
-setvar! HerdingPrice '10000'
-setvar! InscriptionPrice '10000'
+setvar! HerdingPrice '9000'
+setvar! InscriptionPrice '15000'
 setvar! ItemIdPrice '7500'
 setvar! LockpickingPrice '7500'
 setvar! LumberjackingPrice '7500'
 setvar! MusicanshipPrice '12000'
-setvar! MiningPrice '10000'
-setvar! NecromancyPrice '10000'
+setvar! MiningPrice '7500'
+setvar! NecromancyPrice '30000'
 setvar! PeacemakingPrice '8000'
 setvar! PoisoningPrice '10000'
 setvar! ProvocationPrice '8000'
-setvar! RemoveTrapPrice '10000'
-setvar! SpiritSpeakPrice '10000'
+setvar! RemoveTrapPrice '7500'
+setvar! SpiritSpeakPrice '7500'
 setvar! StealthPrice '7500'
-setvar! TailoringPrice '10000'
-setvar! TasteIdPrice '10000'
-setvar! TinkeringPrice '10000'
+setvar! TailoringPrice '35000'
+setvar! TasteIdPrice '14000'
+setvar! TinkeringPrice '8000'
 setvar! TrackingPrice '7500'
 setvar! VeterinaryPrice '7500'
 
@@ -92,7 +97,10 @@ setvar! MastercraftingDiagramPrice '35000'
 setvar! ResearchMaterialsPrice '35000'
 setvar! ArcaneScrollPrice '30000' 
 setvar! PlantChemicalsPrice '2500' 
-setvar! phylacteryPrice '400' 
+setvar! phylacteryPrice '450' 
+setvar! MelloweedSeedPrice '13000'
+setvar! BarleySeedPrice '300'
+setvar! HoopSeedPrice '300'
 
 //=========================================
 
@@ -508,6 +516,30 @@ while findtype '29030' backpack as item
     ignore item
 endwhile
 
+while findtype 'bag of seeds' backpack 0 as item
+    lift item 1
+    drop otherItemsContainer 162 51 0
+    wait 250
+    promptresponse MelloweedSeedPrice
+    ignore item
+endwhile
+
+while findtype 'bag of seeds' backpack 2418 as item
+    lift item 1
+    drop otherItemsContainer 162 63 0
+    wait 250
+    promptresponse BarleySeedPrice
+    ignore item
+endwhile
+
+while findtype 'bag of seeds' backpack 2208 as item
+    lift item 1
+    drop otherItemsContainer 162 76 0
+    wait 250
+    promptresponse HoopSeedPrice
+    ignore item
+endwhile
+
 //Other rares
 if setContainerVariables == '1'
 overhead 'Set container for phylactery' 2263
@@ -522,6 +554,55 @@ while findtype 'phylactery' backpack as item
     promptresponse phylacteryPrice
     ignore item
 endwhile
+
+//=========================================
+
+@removelist! craftedItems
+@createlist! craftedItems
+@pushlist! craftedItems 'Elven Spellblade'
+@pushlist! craftedItems 'pickaxe'
+@pushlist! craftedItems 'hatchet'
+@pushlist! craftedItems 'shovel'
+@pushlist! craftedItems 'lockpicks'
+@pushlist! craftedItems 'drill'
+
+if setContainerVariables == '1'
+    overhead 'Set container for Crafts' 2263
+    setvar craftsContainer
+endif
+
+foreach type in craftedItems
+    while findtype type backpack as item
+        getlabel item desc
+        if 'knife' in desc
+            @setvar! pos_x 44
+        elseif 'pickaxe' in desc
+            @setvar! pos_x 73
+        elseif 'hatchet' in desc
+            @setvar! pos_x 93
+        elseif 'shovel' in desc
+            @setvar! pos_x 105
+        elseif 'lockpicks' in desc
+            @setvar! pos_x 124
+        elseif 'trap' in desc
+            @setvar! pos_x 141
+        endif
+        
+        if 'agapite' in desc
+            @setvar! pos_y 65
+            @setvar! price AgapitePrice
+        elseif 'verite' in desc
+            @setvar! pos_y 75
+            @setvar! price VeritePrice
+        endif
+        
+        lift item 1
+        drop craftsContainer pos_x pos_y 0
+        wait 250
+        promptresponse price 
+        @ignore! item
+    endwhile
+endfor
 
 clearignore
 overhead 'Script Finished' 2263

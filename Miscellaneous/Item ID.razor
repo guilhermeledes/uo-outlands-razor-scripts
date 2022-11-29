@@ -14,11 +14,21 @@
   #   invulnerability
 
   clearall 
+  if not varexist id_source_container
+    @setvar id_source_container
+  endif
+  if not varexist good_items_store_container
+    @setvar good_items_store_container
+  endif
+  if not varexist creep_items_store_container
+    @setvar creep_items_store_container
+  endif
   
-  setvar id_source_container
-  setvar good_items_store_container
-  setvar creep_items_store_container
-
+  dclick id_source_container
+  wait 250
+  dclick good_items_store_container
+  wait 250
+  
   removelist id_weapon_items
   removelist id_armor_items
   removelist id_bard_items
@@ -146,19 +156,20 @@
       sysmsg id 88
       while findtype id id_source_container as item
           getlabel item description
-          overhead description 88
           if unidentified in description
               useskill "itemId"
               wft 500
               target item
               wait 2000
-          elseif power in description or vanquishing in description or supremely in description or exceedingly in description or slaying in description or greater in description
+              elseif power in description or vanquishing in description or supremely in description or exceedingly in description or eminently in description or greater in description
+              overhead description 88
               lift item
               wait 250
               drop good_items_store_container -1 -1 -1
               ignore item
               wait 250
           else 
+              overhead description 88
               lift item
               wait 250
               drop creep_items_store_container -1 -1 -1
@@ -172,19 +183,20 @@
       sysmsg id 88
       while findtype id id_source_container as item
           getlabel item description
-          overhead description 88
           if unidentified in description
               useskill "itemId"
               wft 500
               target item
               wait 2000
-          elseif supremely in description or exceedingly in description or slaying in description or greater in description
+          elseif supremely in description or exceedingly in description or greater in description
+              overhead description 88
               lift item
               wait 250
               drop good_items_store_container -1 -1 -1
               ignore item
               wait 250
           else 
+              overhead description 88
               lift item
               wait 250
               drop creep_items_store_container -1 -1 -1
@@ -198,17 +210,18 @@
       sysmsg id 88
       while findtype id id_source_container as item
           getlabel item description
-          overhead description 88
           if unidentified in description
               useskill "itemId"
               wft 500
               target item
               wait 2000
           elseif fortification in description or invulnerability in description
+              overhead description 88
               lift item
               wait 250
               drop good_items_store_container -1 -1 -1
           else 
+              overhead description 88
               lift item
               wait 250
               drop creep_items_store_container -1 -1 -1
@@ -223,19 +236,20 @@
       sysmsg id 88
       while findtype id id_source_container as item
           getlabel item description
-          overhead description 88
           if unidentified in description
               useskill "itemId"
               wft 500
               target item
               wait 2000
-          elseif power in description or vanquishing in description or supremely in description or exceedingly in description or slaying in description or greater in description
+          elseif power in description or vanquishing in description or supremely in description or exceedingly in description or greater in description
+              overhead description 88
               lift item
               wait 250
               drop good_items_store_container -1 -1 -1
               ignore item
               wait 250
           else 
+              overhead description 88
               lift item
               wait 250
               drop creep_items_store_container -1 -1 -1

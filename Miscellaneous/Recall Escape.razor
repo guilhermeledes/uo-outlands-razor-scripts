@@ -2,4 +2,8 @@ while not targetexists
     cast "Recall"
     wait 200
 endwhile
-targettype 'runebook' backpack
+if findtype 'runebook' backpack as destination
+    target destination
+elseif findtype 'recall rune' backpack as destination
+    target destination
+endif

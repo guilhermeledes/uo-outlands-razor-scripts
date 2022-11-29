@@ -1,0 +1,18 @@
+walk 'up'
+walk 'up'
+walk 'up'
+walk 'up'
+walk 'up'
+walk 'up'
+walk 'up'
+while findtype "log%s" backpack as log
+    dclick log
+    wait 100
+endwhile
+dclick 0x44BA0066
+waitforgump 1859005118
+gumpresponse 2
+waitfortarget
+waitforgump 1859005118
+target 'self'
+waitforgump 1859005118

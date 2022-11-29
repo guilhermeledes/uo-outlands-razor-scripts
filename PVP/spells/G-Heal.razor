@@ -1,0 +1,8 @@
+overhead 'greater heal'
+if insysmsg 'you cannot move' or insysmsg 'You must wait before using this command again'
+    say '[pouch'
+    wait 50
+endif
+if hp < maxhp
+    hotkey '> greater heal/cure self'
+endif
