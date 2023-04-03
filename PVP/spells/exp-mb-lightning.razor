@@ -1,35 +1,44 @@
-cast 'explosion'
-waitfortarget
-target 'last'
-wait 500
+overhead "SELECT COMBO TARGET" 34
+@setvar! myKillTarget 
 
-if findtype "Purple Potion" backpack
-    cast 'telekinesis'
-    waitfortarget
-    target 'last'
-    wait 100
+overhead "MY TARGET IS HERE" 34 myKillTarget
 
-    overhead '** Greater Explosion **' 76 'self'
-    hotkey 'drink explosion'
-    waitfortarget
-    target 'last'
-    wait 100
+while not targetexists
+    cast 'Magic Arrow'
+endwhile
+target myKillTarget
+overhead "MY TARGET IS HERE" 34 myKillTarget
+while not targetexists
+    cast 'Weaken'
+endwhile
+target myKillTarget
+overhead "MY TARGET IS HERE" 34 myKillTarget
+if findtype "Purple Potion" backpack as pot
+    if not cooldown jaseowns
+        while not targetexists
+            cast 'Telekinesis'
+        endwhile
+        target myKillTarget
+        cooldown jaseowns 30000
+        wait 200
+    endif
+    dclick pot
+    wft 500
+    target myKillTarget
+    overhead "MY TARGET IS HERE" 34 myKillTarget
 endif
-
-cast 'mind blast'
-waitfortarget
-target 'last'
-wait 500
-
-cast 'lightning'
-waitfortarget
-target 'last'
-wait 500
-
-cast 'magic arrow'
-waitfortarget
-target 'last'
-
-cast 'magic arrow'
-waitfortarget
-target 'last'
+while not targetexists
+    cast 'Explosion'
+endwhile
+target myKillTarget
+overhead "MY TARGET IS HERE" 34 myKillTarget
+while not targetexists
+    cast 'Energy Bolt'
+endwhile
+target myKillTarget
+overhead "MY TARGET IS HERE" 34 myKillTarget
+while not targetexists
+    cast 'lightning'
+endwhile
+target myKillTarget
+wait 200

@@ -1,0 +1,13 @@
+cast 'Magic Arrow'
+waitfortarget
+target 0xC1A1B
+wait 500
+if mana <= 5
+  while mana < maxmana
+    if not findbuff "actively meditating"
+      useskill "meditation"
+      wait 3500
+    endif
+  endwhile
+endif
+loop

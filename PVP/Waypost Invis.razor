@@ -1,0 +1,16 @@
+clearsysmsg 
+cast invisibility
+while not dead 
+    if insysmsg "control."
+        break
+    endif
+    if insysmsg "control over waypost"
+        break
+    endif
+    if insysmsg "waypost has reverted to neutral"
+        break
+    endif
+endwhile
+hotkey "target self"
+wait 28000
+loop

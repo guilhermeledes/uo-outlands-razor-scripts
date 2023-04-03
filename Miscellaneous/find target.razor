@@ -1,0 +1,18 @@
+setvar myTarget
+if not timerexists foundTarg
+    createtimer foundTarg
+endif
+@setvar! notFoundTimer 3500
+settimer foundTarg notFoundTimer
+
+while not dead
+    if find myTarget ground -1 -1 18
+        if timer foundTarg >= notFoundTimer
+            overhead "NOT FOUND" 33
+            settimer foundTarg 0
+        endif
+    else
+        overhead ">>>HERE<<<" 53 myTarget
+    endif
+    wait 500
+endwhile

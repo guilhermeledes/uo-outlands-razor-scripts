@@ -1,0 +1,30 @@
+@clearsysmsg 
+if findlayer self righthand as found
+    @setvar! weapon_equipped found
+elseif findlayer self lefthand as found
+    @setvar! weapon_equipped found
+else
+    overhead "Unknown or no weapon equipped" 34
+    stop
+endif
+getlabel weapon_equipped desc
+if "poison charges" in desc
+    overhead "Weapon poisoned: {{desc}}"
+else
+    if findtype "Green Potion" backpack
+        menu weapon_equipped 0
+    else
+        overhead "No poison pots" 34
+        stop
+    endif
+endif
+while not dead
+    if insysmsg "You fail to apply a sufficient dose of poison"
+        overhead "Fail Poisoning"
+        loop
+    endif
+    if insysmsg "You apply the poison"
+        overhead "Success Poisoning"
+        stop
+    endif
+endwhile

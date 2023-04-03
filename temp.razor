@@ -1,6 +1,13 @@
-if findtype "fish steak%s%" ground as fish
-lift fish 1
-drop 0x44BB3FDB -1 -1 0
-wait 500 
-endif
-loop
+clearignore 
+while findtype "recall rune" as runa
+    getlabel runa desc
+    if unknown in desc
+        dclick runa
+        waitforprompt any
+        promptresponse "SYN GH"
+        wait 50
+    else
+        overhead desc
+    endif
+    ignore runa
+endwhile

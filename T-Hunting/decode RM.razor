@@ -1,0 +1,11 @@
+if find 0x40A5EDFD ground as book
+    while findtype '24434' backpack as rm
+        dclick rm
+        waitforgump 709455756
+        gumpresponse 3
+        waitforgump 2520345223
+        gumpclose 
+        menu book  0
+        wait 500
+    endwhile
+endif

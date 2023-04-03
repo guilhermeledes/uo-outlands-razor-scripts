@@ -1,262 +1,154 @@
-  # IDing Weapons and Armor and saving the best by Jaseowns
-  # UO Outlands
-  # Video Explanation: https://youtu.be/Hwh8hW2LEaw
-  # Requirements:  
-  #   Have item ID skill above 0
-  #
-  # Additional Info: 
-  #   This script only saves the following:
-  #   power
-  #   vanquishing
-  #   exceedingly
-  #   supremely
-  #   fortification 
-  #   invulnerability
+if not listexists qtd_servicos
+    @createlist! qtd_servicos
+endif
 
-  clearall 
-  if not varexist id_source_container
-    @setvar id_source_container
-  endif
-  if not varexist good_items_store_container
-    @setvar good_items_store_container
-  endif
-  if not varexist creep_items_store_container
-    @setvar creep_items_store_container
-  endif
-  
-  dclick id_source_container
-  wait 250
-  dclick good_items_store_container
-  wait 250
-  
-  removelist id_weapon_items
-  removelist id_armor_items
-  removelist id_bard_items
-  removelist id_mage_weapon_items
+if not varexist current_essence
+    if counttype 12686 backpack 2609 as essence
+        @setvar! current_essence essence
+    endif
+endif
 
-  if not listexists id_weapon_items
-      createlist id_weapon_items
-      pushlist id_weapon_items "martial arts scroll"
-      pushlist id_weapon_items "halberd"
-      pushlist id_weapon_items "bardiche"
-      pushlist id_weapon_items "battle axe"
-      pushlist id_weapon_items "double axe"
-      pushlist id_weapon_items "two handed axe"
-      pushlist id_weapon_items "executioner's axe"
-      pushlist id_weapon_items "large battle axe"
-      pushlist id_weapon_items "axe"
-      pushlist id_weapon_items "scimitar"
-      pushlist id_weapon_items "longsword"
-      pushlist id_weapon_items "viking sword"
-      pushlist id_weapon_items "katana"
-      pushlist id_weapon_items "cutlass"
-      pushlist id_weapon_items "broadsword"
-      pushlist id_weapon_items "war hammer"
-      pushlist id_weapon_items "war axe"
-      pushlist id_weapon_items "maul"
-      pushlist id_weapon_items "quarter staff"
-      pushlist id_weapon_items "gnarled staff"
-      pushlist id_weapon_items "black staff"
-      pushlist id_weapon_items "hammer pick"
-      pushlist id_weapon_items "club"
-      pushlist id_weapon_items "shepherd's crook"
-      pushlist id_weapon_items "war mace"
-      pushlist id_weapon_items "mace"
-      pushlist id_weapon_items "Long Spear"
-      pushlist id_weapon_items "pitchfork"
-      pushlist id_weapon_items "war fork"
-      pushlist id_weapon_items "kryss"
-      pushlist id_weapon_items "short spear"
-      pushlist id_weapon_items "bow"
-      pushlist id_weapon_items "crossbow"
-      pushlist id_weapon_items "heavy crossbow"
-      pushlist id_weapon_items "bladed staff"
-  endif
+if not varexist current_leather
+    if counttype 4225 backpack as leather
+        @setvar! current_leather leather
+    endif
+endif
+
+if not varexist current_scroll
+    if counttype 3827 backpack as scroll
+        @setvar! current_scroll scroll
+    endif
+endif
+
+if not varexist current_cloth
+    if counttype 5990 backpack as cloth
+        @setvar! current_cloth cloth
+    endif
+endif
+
+if not varexist current_iron
+    if counttype 7154 backpack as iron
+        @setvar! current_iron iron
+    endif
+endif
+
+if not varexist current_log
+    if counttype 7127 backpack as log
+        @setvar! current_log log
+    endif
+endif
 
 
-  if not listexists id_armor_items
-      createlist id_armor_items
-      pushlist id_armor_items "leather tunic"
-      pushlist id_armor_items "leather leggings"
-      pushlist id_armor_items "leather sleeves"
-      pushlist id_armor_items "leather cap"
-      pushlist id_armor_items "leather gloves"
-      pushlist id_armor_items "leather gorget"
-      pushlist id_armor_items "leather armor"
-      pushlist id_armor_items "leather bustier"
-      pushlist id_armor_items "leather shorts"
-      pushlist id_armor_items "leather skirt"
-      pushlist id_armor_items "studded tunic"
-      pushlist id_armor_items "studded leggings"
-      pushlist id_armor_items "studded sleeves"
-      pushlist id_armor_items "studded gloves"
-      pushlist id_armor_items "studded gorget"
-      pushlist id_armor_items "studded armor"
-      pushlist id_armor_items "studded bustier"
-      pushlist id_armor_items "bone armor"
-      pushlist id_armor_items "bone legs"
-      pushlist id_armor_items "bone arms"
-      pushlist id_armor_items "bone helmet"
-      pushlist id_armor_items "bone gloves"
-      pushlist id_armor_items "ringmail tunic"
-      pushlist id_armor_items "ringmail leggings"
-      pushlist id_armor_items "ringmail sleeves"
-      pushlist id_armor_items "helmet"
-      pushlist id_armor_items "ringmail gloves"
-      pushlist id_armor_items "orc helm"
-      pushlist id_armor_items "chainmail tunic"
-      pushlist id_armor_items "chainmail leggings"
-      pushlist id_armor_items "chainmail coif"
-      pushlist id_armor_items "platemail"
-      pushlist id_armor_items "platemail legs"
-      pushlist id_armor_items "platemail arms"
-      pushlist id_armor_items "plate helm"
-      pushlist id_armor_items "platemail gloves"
-      pushlist id_armor_items "platemail gorget"
-      pushlist id_armor_items "plate armor"
-      pushlist id_armor_items "bascinet"
-      pushlist id_armor_items "close helm"
-      pushlist id_armor_items "norse helm"
-      pushlist id_armor_items "wooden shield"
-      pushlist id_armor_items "kite shield"
-      pushlist id_armor_items "buckler "
-      pushlist id_armor_items "buckler"
-      pushlist id_armor_items "metal shield"
-      pushlist id_armor_items "bronze shield"
-      pushlist id_armor_items "kite shield"
-      pushlist id_armor_items "heater shield"
-      pushlist id_armor_items "Chaos shield"
-      pushlist id_armor_items "Order shield"
-  endif
+if not timerexists "itemId"
+    settimer "itemId" 11000
+endif
 
+if not timerexists "propaganda"
+    settimer "propaganda" 90000
+endif
 
-  if not listexists id_bard_items
-      createlist id_bard_items
-      pushlist id_bard_items "lap harp"
-      pushlist id_bard_items "drum"
-      pushlist id_bard_items "lute"
-      pushlist id_bard_items "bamboo flute"
-      pushlist id_bard_items "tambourine"
-  endif
+if timer "propaganda" >= 90000
+    say "Olá, sou um bot de ItemID, basta jogar sua bag com itens unindetified no chão aqui perto de mim que farei o serviço"
+    settimer "propaganda" 0
+    @clearignore 
+endif
 
+if not listexists bag_types
+    createlist bag_types
+    pushlist bag_types "backpack"
+    pushlist bag_types "strong box"
+    pushlist bag_types "metal chest"
+    pushlist bag_types "wooden chest"
+    pushlist bag_types "bag"
+    pushlist bag_types "pouch"
+endif
 
-  if not listexists id_mage_weapon_items
-      createlist id_mage_weapon_items
-      pushlist id_mage_weapon_items "spellbook"
-      pushlist id_mage_weapon_items "wand"
-      pushlist id_mage_weapon_items "3570"
-  endif
+foreach current_bag in bag_types
+    while findtype current_bag ground any 1 2 as bag_to_id
+        say "Opa, uma bag para identificar!"
+        wait 1000
+        if timer "itemId" < 11000
+            say "Espere só alguns segundos para o coldown da skill"
+            while timer "itemId" < 11000
+                wait 1000
+            endwhile
+        endif
+        skill "ItemId"
+        wft 5000
+        target bag_to_id
+        settimer "itemId" 0
+        getlabel bag_to_id desc
+        @pushlist! qtd_servicos bag_to_id
+        say desc
+        wait 1000
+        say "Todos seus itens foram identificados!"
+        wait 1000
+        say "Se quiser deixar uma gorjeta basta jogar no chão couro, madeira, ferro, pano, blank scrolls, ouro ou essências..."
+        hotkey "cancel current target"
+        @ignore! bag_to_id
+    endwhile
+endfor
+wait 500
 
-  if skill "Item Identification" <= 0
-      overhead "Requires item ID skill to continue.." 34
-      stop
-  endif
+if counter "gold" > 0
+    organizer 1
+    say "♥♥ Obrigado ♥♥"
+endif
 
-  foreach id in id_mage_weapon_items
-      sysmsg id 88
-      while findtype id id_source_container as item
-          getlabel item description
-          if unidentified in description
-              useskill "itemId"
-              wft 500
-              target item
-              wait 2000
-              elseif power in description or vanquishing in description or supremely in description or exceedingly in description or eminently in description or greater in description
-              overhead description 88
-              lift item
-              wait 250
-              drop good_items_store_container -1 -1 -1
-              ignore item
-              wait 250
-          else 
-              overhead description 88
-              lift item
-              wait 250
-              drop creep_items_store_container -1 -1 -1
-              ignore item
-              wait 250
-          endif
-      endwhile
-  endfor
+if counttype 12686 backpack 2609 as essence_counted
+    if counter "essence" > current_essence
+        @setvar! current_essence essence_counted
+        say "♥♥ Obrigado ♥♥"
+    endif
+endif
 
-  foreach id in id_bard_items
-      sysmsg id 88
-      while findtype id id_source_container as item
-          getlabel item description
-          if unidentified in description
-              useskill "itemId"
-              wft 500
-              target item
-              wait 2000
-          elseif supremely in description or exceedingly in description or greater in description
-              overhead description 88
-              lift item
-              wait 250
-              drop good_items_store_container -1 -1 -1
-              ignore item
-              wait 250
-          else 
-              overhead description 88
-              lift item
-              wait 250
-              drop creep_items_store_container -1 -1 -1
-              ignore item
-              wait 250
-          endif
-      endwhile
-  endfor
+if counttype 4225 backpack as leather_counted
+    if counter "leather" > current_leather
+        @setvar! current_leather leather_counted
+        say "♥♥ Obrigado ♥♥"
+    endif
+endif
 
-  foreach id in id_armor_items
-      sysmsg id 88
-      while findtype id id_source_container as item
-          getlabel item description
-          if unidentified in description
-              useskill "itemId"
-              wft 500
-              target item
-              wait 2000
-          elseif fortification in description or invulnerability in description
-              overhead description 88
-              lift item
-              wait 250
-              drop good_items_store_container -1 -1 -1
-          else 
-              overhead description 88
-              lift item
-              wait 250
-              drop creep_items_store_container -1 -1 -1
-              ignore item
-              wait 250
-          endif
-      endwhile
-  endfor
+if counttype 3827 backpack as scroll_counted
+    if counter "scroll" > current_scroll
+        @setvar! current_scroll scroll_counted
+        say "♥♥ Obrigado ♥♥"
+    endif
+endif
 
+if counttype 5990 backpack as cloth_counted
+    if counter "cloth" > current_cloth
+        @setvar! current_cloth cloth_counted
+        say "♥♥ Obrigado ♥♥"
+    endif
+endif
 
-  foreach id in id_weapon_items
-      sysmsg id 88
-      while findtype id id_source_container as item
-          getlabel item description
-          if unidentified in description
-              useskill "itemId"
-              wft 500
-              target item
-              wait 2000
-          elseif power in description or vanquishing in description or supremely in description or exceedingly in description or greater in description
-              overhead description 88
-              lift item
-              wait 250
-              drop good_items_store_container -1 -1 -1
-              ignore item
-              wait 250
-          else 
-              overhead description 88
-              lift item
-              wait 250
-              drop creep_items_store_container -1 -1 -1
-              ignore item
-              wait 250
-          endif
-      endwhile
-  endfor
+if counttype 7154 backpack as iron_counted
+    if counter "iron" > current_iron
+        @setvar! current_iron iron_counted
+        say "♥♥ Obrigado ♥♥"
+    endif
+endif
 
-  clearignore 
+if counttype 7127 backpack as log_counted
+    if counter "log" > current_log
+        @setvar! current_log log_counted
+        say "♥♥ Obrigado ♥♥"
+    endif
+endif
+
+if insysmsg "you fail to ignite the campfire"
+    if list qtd_servicos > 0
+        foreach x in qtd_servicos
+            @setvar! qtd index
+            sysmsg x
+        endfor
+        sysmsg "Total de serviços: 1+{{qtd}}"
+    else
+        sysmsg "Total de serviços: 0"
+    endif
+    @removelist! qtd_servicos
+endif
+
+wait 1000
+loop

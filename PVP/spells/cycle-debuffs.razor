@@ -20,6 +20,10 @@
 # CREATE ALL LISTS FOR CONFIG
 #
 
+if targetexists 'harmful'
+    hotkey 'Last Target'
+endif
+
 if not listexists 'debuff_spells'
     createlist 'debuff_spells'
     pushlist 'debuff_spells' 'weaken'

@@ -1,13 +1,18 @@
-# Training Fishing by Jaseowns
-# UO Outlands
-# If you are unsure how to create a dress function, 
-# review video timestamp: https://youtu.be/hELkTYPB23M 
-# 1:05 - Fishing Arm/Dress
-if lhandempty
+
+    clearsysmsg 
     dress 'Fishing'
     wait 500
-endif
-hotkey 'Use item in hand'
-wait 2000
-say 'guards'
-loop
+    hotkey 'Use item in hand'
+    wait 1000
+    if insysmsg "You have recently traveled"
+        overhead "Waiting travel time..."
+        wait 5000
+        loop
+    endif
+
+while not dead
+    if insysmsg "You fish" or insysmsg "You catch"
+        hotkey 'Use item in hand'
+        say 'Guards!' 337
+    endif
+endwhile

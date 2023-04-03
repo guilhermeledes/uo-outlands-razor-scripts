@@ -1,0 +1,22 @@
+if findtype 29076 ground as chest
+    @setvar! bau chest
+endif
+
+if findtype 29089 ground as chest
+    @setvar! bau chest
+endif
+
+lifttype "map" 1 backpack
+wait 100
+drop bau
+
+wait 100
+
+//lifttype "dirt patch" 60000 backpack
+//wait 100
+//drop bau
+
+menu bau 1
+
+wait 100
+script "Recall Escape"

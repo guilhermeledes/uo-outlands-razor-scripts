@@ -1,0 +1,35 @@
+
+removelist dragdrop
+createlist dragdrop
+pushlist dragdrop "Mastery Chain"
+pushlist dragdrop "reagent satchel"
+pushlist dragdrop "short pipe"
+pushlist dragdrop "joint"
+
+removelist roupas
+createlist roupas
+pushlist roupas shoes
+pushlist roupas doublet
+pushlist roupas kilt
+pushlist roupas skirt
+pushlist roupas lantern
+pushlist roupas headband
+pushlist roupas "long pants"
+pushlist roupas "wrapped tunic"
+
+foreach x in dragdrop
+    if findtype x backpack as roupa
+        lift roupa 1
+        wait 100
+        drop self InnerTorso
+    endif
+endfor
+
+foreach x in roupas
+    if findtype x backpack as roupa
+        dclick roupa
+        wait 100
+    endif
+endfor
+
+dress fullset

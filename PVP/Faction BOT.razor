@@ -1,0 +1,71 @@
+if not timerexists bot
+    createtimer bot
+endif
+if not timerexists checkFlag
+    createtimer checkFlag
+endif
+settimer checkFlag 300000
+
+while not dead 
+    if timer bot >= 10000
+        sysmsg ">>>Faction-BOT running<<<"
+        settimer bot 0
+    endif
+    if insysmsg "[F] We have taken full control of waypost 7: Ruined House"
+        //guild "[Faction-BOT] Tomamos o ultimo waypost de Andaria - 7 - Ruined House"
+        wait 100
+        alliance "[Faction-BOT] We have taken the last waypost of Andaria - 7 - Ruined House"
+        clearsysmsg 
+    elseif insysmsg "[F] We have taken full control of waypost 16: Forsaken Keep"
+        //guild "[Faction-BOT] Tomamos o ultimo waypost de Prevalia - 16 - Forsaken Keep"
+        wait 100
+        alliance "[Faction-BOT] We have taken the last waypost from Prevalia - 16 - Forsaken Keep"
+        clearsysmsg 
+    elseif insysmsg "[F] We have taken full control of waypost 13: Uruk Stronghold"
+        //guild "[Faction-BOT] Tomamos o ultimo waypost de Terran - 13 - Uruk Stronghold"
+        wait 100
+        alliance "[Faction-BOT] We have taken the last waypost from Terran - 13 - Uruk Stronghold"
+        clearsysmsg 
+    endif
+    
+    if insysmsg "begins to steal a flag from the Andaria" and timer checkFlag >= 300000
+        for 2
+            for 3
+                //guild "[Faction-BOT] Começamos a tomar bandeira do castelo de Andaria"
+                wait 100
+                alliance "[Faction-BOT] Start to take flags from Andaria castle"
+                wait 500
+            endfor
+            wait 20000
+        endfor
+        wait 100
+        clearsysmsg 
+        settimer checkFlag 0
+    elseif insysmsg "begins to steal a flag from the Prevalia" and timer checkFlag >= 300000
+        for 2
+            for 3
+                //guild "[Faction-BOT] Começamos a tomar bandeira do castelo de Prevalia"
+                wait 100
+                alliance "[Faction-BOT] Start to take flags from Prevalia castle"
+                wait 500
+            endfor
+            wait 20000
+        endfor
+        wait 100
+        clearsysmsg 
+        settimer checkFlag 0
+    elseif insysmsg "begins to steal a flag from the Terran" and timer checkFlag >= 300000
+        for 2
+            for 3
+                //guild "[Faction-BOT] Começamos a tomar bandeira do castelo de Terran"
+                wait 100
+                alliance "[Faction-BOT] Start to take flags from Terran castle"
+                wait 500
+            endfor
+            wait 20000
+        endfor
+        wait 100
+        clearsysmsg 
+        settimer checkFlag 0
+    endif
+endwhile

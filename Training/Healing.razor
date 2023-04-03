@@ -3,11 +3,10 @@ if not timerexists "bandage"
     settimer "bandage" 16000
 endif
 
-if timer 'bandage' >= 10000 and skill "Healing" < 80
-    overhead 'healing'
+if timer 'bandage' >= 15000 and skill "Healing" < 80
     clearsysmsg 
     if skill "Healing" = 80
-        stop
+        ;; stop
     endif
     if findtype 5912 self as wizardhat
         dclick wizardhat
@@ -24,21 +23,9 @@ if timer 'bandage' >= 10000 and skill "Healing" < 80
     if not findtype 3617
         overhead "No more bandages! Restock!" 20
     endif
+    overhead 'healing'
     hotkey "Bandage Self"
     settimer 'bandage' 0
-endif
-
-if not timerexists "taste"
-    createtimer "taste"
-    settimer "taste" 16000
-endif
-
-if timer 'taste' >= 10500
-    overhead 'taste'
-    useskill 'TasteId'
-    waitfortarget
-    hotkey 'last target'
-    settimer 'taste' 0
 endif
 
 loop

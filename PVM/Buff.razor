@@ -1,0 +1,437 @@
+#################################
+# MAINTAIN ALL CHAR BUFFS
+# by gugutz
+# version 0.0.1
+#################################
+
+
+#################################
+# CONFIGURATION
+#################################
+setvar! action_delay 350
+
+
+#################################
+# CREATE ALL TIMERS
+#################################
+
+if not listexists 'maintain_char_buffs_timers'
+    createlist 'maintain_char_buffs_timers'
+    pushlist 'maintain_char_buffs_timers' 'waiting_spell_timer'
+
+    foreach timer in 'maintain_char_buffs_timers'
+        if not timerexists timer
+            createtimer timer
+            settimer timer 99999
+        endif
+    endfor
+endif
+
+
+
+######################################
+#
+# CODE START
+#
+######################################
+
+
+if not listexists 'done_something'
+    createlist 'done_something'
+endif
+clearlist 'done_something'
+
+
+
+######################################
+# BARDING BUFFS
+######################################
+
+# BARDING BUFFS GO LAST CAUSE THEY HAVE A COOLDOWN BETWEEN ONE ANOTHER
+# WHICH COULD DELAY THE APPLICATION OF OTHER MORE IMPORTANT BUFFS LIKE STR POT
+
+# if not listexists 'barding_skills'
+#     createlist 'barding_skills'
+#     pushlist 'barding_skills' 'discordance'
+#     pushlist 'barding_skills' 'peacemaking'
+#     pushlist 'barding_skills' 'provocation'
+#     pushlist 'barding_skills' 'lap harp'
+# endif
+
+# foreach skill_name in 'barding_skills'
+    # if skill skill_name >= 50 and not findbuff 'song of {{skill_name}}'
+    #     setvar temp skill_name
+    #     useskill skill_name
+    #     overhead 'PEGOU CONCAT {{temp}}'
+    # endif
+# endfor
+
+if skill 'peacemaking' >= 50 or skill 'discordance' >= 50 or skill 'provocation' >= 50
+
+    if not varexist char_instrument
+        if not listexists 'instruments'
+            createlist 'instruments'
+            pushlist 'instruments' 'lute'
+            pushlist 'instruments' 'drum'
+            pushlist 'instruments' 'bamboo flute'
+            pushlist 'instruments' 'tambourine'
+            pushlist 'instruments' 'lap harp'
+        endif
+
+
+        # # overhead 'debug 00001'
+        # if not listexists 'char_instrument'
+        #     createlist 'char_instrument'
+        # else
+        #     clearlist 'char_instrument'
+        # endif
+
+        foreach type in 'instruments'
+            # find all instruments and see if any of them are magical
+            while findtype type backpack as instrument and not varexist char_instrument
+                getlabel instrument instrument_label
+
+                if exceedingly in instrument_label or supremely in instrument_label
+                    setvar! char_instrument instrument
+                    break
+                endif
+                @ignore instrument
+            endwhile
+
+            @clearignore
+
+            if varexist char_instrument
+                break
+            endif
+        endfor
+    endif
+
+    if varexist char_instrument
+
+        # PEACEMAKING
+        if skill 'peacemaking' >= 20 and not findbuff 'song of peacemaking'
+            script 'buffs\peacemaking-buff'
+        endif
+
+        # PEACEMAKING
+        if skill 'discordance' >= 20 and not findbuff 'song of discordance'
+            pushlist 'done_something' 'yes'
+
+            # taken from my discordance-buff script
+            clearsysmsg
+            useskill 'discordance'
+            wft 600
+
+            if insysmsg 'You must wait a few moments before performing another barding song'
+                over 'barding cooldown. retrying...'
+                replay
+            endif
+
+            if insysmsg 'What instrument shall you play?'
+                overhead 'selecting instrument...' 54
+                dclick instrument
+                wait 600
+            endif
+
+            if targetexists 'harmful' and insysmsg 'What do you wish to discord?'
+
+                if findtype 'dagger' backpack as knife
+                    target knife
+                elseif findtype 'spellbook' backpack as book
+                    target book
+                else
+                    targetrelloc 1 1
+                endif
+
+                wait 200
+                if findbuff 'song of discordance'
+                    overhead '+ discordance buff' 91
+                    stop
+                endif
+            endif
+
+        endif
+
+        # PROVOCATION
+        if skill 'provocation' >= 20 and not findbuff 'song of provocation'
+            pushlist 'done_something' 'yes'
+
+            # taken from my provocation-buff script
+            clearsysmsg
+            useskill 'provocation'
+            wft 600
+
+            if insysmsg 'You must wait a few moments before performing another barding song'
+                over 'barding cooldown. retrying...'
+                replay
+            endif
+
+            if insysmsg 'What instrument shall you play?'
+                overhead 'selecting instrument...' 54
+                dclick instrument
+                wait 600
+            endif
+
+            if targetexists 'harmful' and insysmsg 'What do you wish to incite?'
+
+                if findtype 'dagger' backpack as knife
+                    target knife
+                elseif findtype 'spellbook' backpack as book
+                    target book
+                else
+                    targetrelloc 1 1
+                endif
+
+                wait 200
+                if findbuff 'song of provocation'
+                    overhead '+ provocation buff' 91
+                    stop
+                endif
+            endif
+
+        endif
+    else
+        overhead '!CANT BUFF! NO INSTRUMENT!' 39
+    endif
+
+endif
+
+
+######################################
+# OTHER SKILL BUFFS
+######################################
+
+# keep campfire buff
+if skill 'camping' >= 20 and not findbuff 'campfire visit'
+    pushlist 'done_something' 'yes'
+    # copied from my campfire buff script
+    #
+    if findtype campfire ground any any 7 as campfire_serial
+        overhead 'found campfire nearby!' 53
+        dclick campfire_serial
+    endif
+
+    if not findtype campfire ground any any 2 and findtype 'kindling' backpack
+        if not findtype campfire ground any any 7
+            if findtype kindling backpack as firestarter
+                overhead '*lighting a campfire*' 53
+                dclick firestarter
+                wait 600
+
+                # check if succeeded
+                if findtype campfire ground any any 2
+                    overhead '*created campfire*'
+                endif
+            else
+                sysmsg 'Out of Kindling!' 39
+                overhead '! no kindling !' 39
+                wait 600
+                break
+            endif
+        endif
+    endif
+endif
+
+
+# maintain food satisfaction buff
+if not findbuff 'Food Satisfaction' and findtype 'tray' backpack
+    if list 'done_something' == 0
+        pushlist 'done_something' 'yes'
+    endif
+
+    if not findtype 'tray' backpack
+        overhead '! no delectable !' 39
+    elseif findtype 'tray' backpack as food
+        overhead '*eating delectable*' 65
+        dclick food
+        wait action_delay
+    endif
+endif
+
+
+
+# keep taste id buff
+if skill 'taste identification' > 0 and not findbuff 'herbal poultice'
+    if list 'done_something' == 0
+        pushlist 'done_something' 'yes'
+    endif
+
+    skill 'tasteid'
+    wft action_delay
+    if findtype 'dagger' backpack as knife
+        overhead '*herbal poultice*'
+        target knife
+    elseif findtype 'spellbook' backpack as book
+        overhead '*herbal poultice*'
+        target book
+    else
+        targetrelloc 1 1
+    endif
+
+    wait action_delay
+    if findbuff 'herbal poultice'
+        overhead '*herbal poultice*'
+    endif
+endif
+
+if insysmsg 'disturbed'
+    overhead 'disrupted before other buffs!'
+    stop
+endif
+
+
+
+######################################
+# MR POT
+######################################
+
+if not findbuff 'magic resist potion' and findtype 'black potion' backpack
+    if list 'done_something' == 0
+        pushlist 'done_something' 'yes'
+    endif
+
+    overhead '*mr pot*' 90
+    usetype 'black potion' 'backpack'
+    wait 500
+    # END MR POT SCRIPT
+    ##############################
+
+endif
+
+if skill 'magery' >= 40 
+
+    if str <= 100
+        while not targetexists
+            cast 'Bless'
+            wait 50
+            if diffhits >= 30
+                hotkey '> Interrupt'
+                break
+            endif
+        endwhile
+        if targetexists
+            target self
+        endif
+    wait 500
+    else
+        overhead '+bless'
+    endif
+
+    ######################################
+    # MAGIC REFLECTION
+    ######################################
+
+    if not findbuff 'Magic Reflection'
+        if list 'done_something' == 0
+            pushlist 'done_something' 'yes'
+        endif
+
+        sysmsg '>>> MAGIC REFLECTION' 88
+        if counttype 'Garlic' > 0 and counttype 'Mandrake Root%s%' > 0 and counttype "Spider's Silk" > 0
+            cast 'Magic Reflection'
+            wait action_delay
+        elseif counttype 'Magic Reflection' > 0
+            cast 'Magic Reflection'
+            wait action_delay
+        else
+            sysmsg 'No Reagents Or Scrolls for Magic Reflection'
+            sysmsg 'no reflect regs or scroll!' 39
+        endif
+    wait 500
+    else
+        overhead '+ragic reflection'
+    endif
+
+
+    ######################################
+    # PROTECTION
+    ######################################
+
+    if not findbuff 'protection'
+        if list 'done_something' == 0
+            pushlist 'done_something' 'yes'
+        endif
+
+        sysmsg '>>> PROTECTION' 88
+        cast 'protection'
+
+        @settimer 'waiting_spell_timer' 0
+        while not findbuff 'protection' and timer 'waiting_spell_timer' < 1500
+            wait 100
+            if insysmsg 'disturbed' or insysmsg 'spell will not adhere' or insysmsg 'cannot cast a spell'
+                sysmsg 'BREAKING WHILE WAITING FOR PROTECTION'
+                wait 150
+                break
+            endif
+        endwhile
+    wait 500
+        
+    else
+        overhead '+protection'
+    endif
+
+    ######################################
+    # REACTIVE ARMOR
+    ######################################
+
+    if not findbuff 'reactive armor'
+        if list 'done_something' == 0
+            pushlist 'done_something' 'yes'
+        endif
+
+        sysmsg '>>> REACTIVE ARMOR' 88
+        cast 'reactive armor'
+        @settimer 'waiting_spell_timer' 0
+        while not findbuff 'reactive armor' and timer 'waiting_spell_timer' < 2000
+            wait 100
+            if insysmsg 'disturbed' or insysmsg 'spell will not adhere' or insysmsg 'cannot cast a spell'
+                sysmsg 'BREAKING WHILE WAITING FOR REACTIVE ARMOR'
+                wait 150
+                break
+            endif
+        endwhile
+    wait 500
+        
+    else
+        overhead '+reactive'
+    endif
+endif
+
+######################################
+# STR POTION
+######################################
+
+# maintain str at 120 pots
+if str < 120 and findtype 'white potion'
+    overhead '*str pot*' 90
+    usetype 'white potion' 'backpack'
+    wait 500
+endif
+
+
+######################################
+# AGIL POTION
+######################################
+
+# for mages
+if str == 100 and int == 100 and dex < 26 and findtype 'blue potion'
+    overhead '*agil pot*' 90
+    usetype 'blue potion' 'backpack'
+    wait 500
+# for dexxers
+elseif str == 100 and int == 25 and dex < 101 and findtype 'blue potion'
+    sysmsg '[DEBUG] agil use case 3' 37
+    usetype 'blue potion' 'backpack'
+elseif str == 100 and int <= 60 and dex < 70 and findtype 'blue potion'
+    sysmsg '[DEBUG] agil use case 3' 37
+    usetype 'blue potion' 'backpack'
+endif
+
+
+################################
+# NO ACTION TO DO...
+################################
+
+if not inlist 'done_something' 'yes'
+    overhead 'all buffs on!' 66
+endif

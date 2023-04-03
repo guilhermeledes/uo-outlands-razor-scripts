@@ -1,0 +1,10 @@
+if lhandempty
+    dress 'Fishing'
+    wait 10000
+    hotkey 'Use item in hand'
+endif
+if insysmsg "You fish" or insysmsg "You catch" or insysmsg "traveled"
+    hotkey 'Use item in hand'
+    say 'Guards!' 337
+endif
+loop

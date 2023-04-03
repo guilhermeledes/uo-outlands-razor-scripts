@@ -1,0 +1,22 @@
+removelist items
+createlist items
+pushlist items "Ginseng"
+pushlist items "Mandrake Root%s%"
+pushlist items "Garlic"
+pushlist items "Sulfurous Ash"
+pushlist items "Nightshade"
+pushlist items "Blood Moss"
+pushlist items "Spider's Silk"
+pushlist items "Black Pearl%s%"
+pushlist items "empty bottle%s%"
+
+
+foreach item in items
+    if findtype item ground -1 -1 2 as item2
+        lift item2 60000
+        wait 100
+        drop 0xDF133
+    endif
+endfor
+
+organizer 2

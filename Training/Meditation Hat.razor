@@ -1,0 +1,30 @@
+if not timerexists "medit"
+    createtimer "medit"
+    settimer "medit" 10000
+endif
+
+if findtype 5912 self as wizardhat
+    dclick wizardhat
+    
+    while mana < maxmana
+        if timer 'medit' >= 10000 and skill "Meditation" < 80
+            clearsysmsg 
+            if skill "Meditation" = 80
+                stop
+            endif
+            useskill 'Meditation'
+            settimer 'medit' 0
+        endif
+        overhead 'Meditating...'
+        wait 1000
+    endwhile
+    if findlayer self head
+        dclick wizardhat
+        wait 500
+    endif
+else
+    overhead "No wizard hat found! Please find wizard hat to continue. Stopping." 20
+    stop
+endif
+
+loop

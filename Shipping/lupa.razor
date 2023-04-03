@@ -1,0 +1,20 @@
+removelist stealing_timer
+if not listexists stealing_timer
+    createlist stealing_timer
+    for 6
+        pushlist stealing_timer index front
+    endfor
+endif
+
+dclicktype "spyglass"
+waitfortarget
+target 'self'
+waitforgump 2890020940
+gumpresponse 4
+
+foreach current_time in stealing_timer
+    if current_time > 0
+        overhead '{{current_time}}s to spy...'
+        wait 1000
+     endif
+endfor

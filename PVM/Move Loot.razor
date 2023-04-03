@@ -1,70 +1,50 @@
 
 dclick gold_chest
-wait 250
-dclick itens_to_save_bag
-wait 250
+wait 100
 dclick sell_chest
-wait 250
-dclick tmap_bag
-wait 250
+wait 100
 
-dclicktype "storage shelf" ground
-waitforgump 3232825965
-gumpresponse 4
-waitfortarget
-hotkey "target self"
+if findtype "storage shelf" true as shelf
+    menu shelf 0
+    wft 5000
+    hotkey "target self"
+    wait 100
+endif
 
-while findtype 5356 backpack as item
-    getlabel item description
+if gumpexists 3232825965
+    gumpclose 
+endif
+
+if findtype "resource container" true as stockpile
+    menu stockpile 0
+    wft 5000
+    hotkey "target self"
+    wait 100
+endif
+
+@clearignore 
+while findtype 29104 true as tome
+    getlabel tome description
     sysmsg description 88
-    overhead description 88
-    lift item 60000
-    wait 250
-    drop tmap_bag -1 -1 -1
+    menu tome 0
+    wait 100
+    @ignore tome
 endwhile
 
 @removelist loot_items
 @createlist loot_items
 @pushlist loot_items "gold coin"
-@pushlist loot_items "arrow"
-@pushlist loot_items "crossbow bolt"
+@pushlist loot_items "chain link"
 
 foreach loot in loot_items
     while findtype loot backpack as item
         getlabel item description
         sysmsg description 88
-        overhead description 88
         lift item 60000
         wait 250
         drop gold_chest -1 -1 -1
     endwhile
 endfor
-
-@removelist itens_to_save
-@createlist itens_to_save
-@pushlist itens_to_save "Fortune"
-@pushlist itens_to_save "Artisan"
-@pushlist itens_to_save "Earth"
-@pushlist itens_to_save "Poison"
-@pushlist itens_to_save "Discipline"
-@pushlist itens_to_save "tailoring"
-@pushlist itens_to_save "alchemy"
-@pushlist itens_to_save "inscription"
-@pushlist itens_to_save "tinkering"
-@pushlist itens_to_save "tracking"
-//@pushlist itens_to_save "blacksmithy"
-@pushlist itens_to_save "spirit speak"
-@pushlist itens_to_save "forensic"
-//@pushlist itens_to_save "poison"
-//@pushlist itens_to_save "carpentry"
-//@pushlist itens_to_save "camping"
-//@pushlist itens_to_save "necromancy"
-//@pushlist itens_to_save "cooking"
-//@pushlist itens_to_save "item id"
-@pushlist itens_to_save "blank scroll%s%"
-@pushlist itens_to_save "plant chemicals"
-@pushlist itens_to_save "mastercrafting diagram"
-
 
 @removelist rare_loot
 @createlist rare_loot
@@ -72,13 +52,17 @@ endfor
  @pushlist rare_loot "scroll of calling"
  @pushlist rare_loot "aspect core"
  @pushlist rare_loot "folded cloth"
+ // dyes
+ @pushlist rare_loot "3838"
  //Aspect Extracts
  @pushlist rare_loot "3836"
+ @pushlist rare_loot "3843"
  //MCD
  @pushlist rare_loot "Book of Truth"
  @pushlist rare_loot "phylactery"
  //Plant chemical
  @pushlist rare_loot "29030"
+ @pushlist rare_loot "carpet"
  @pushlist rare_loot "void orb"
  @pushlist rare_loot "research materials"
  @pushlist rare_loot 23996
@@ -88,41 +72,22 @@ foreach rare in rare_loot
     while findtype rare backpack as item
         getlabel item description
         sysmsg description 88
-        overhead description 88
         lift item 60000
         wait 250
-        @setvar save_item 0
-        foreach save in itens_to_save
-            if save in description
-                @setvar save_item 1
-            endif
-        endfor
-        if save_item = 1
-            drop itens_to_save_bag -1 -1 -1
-        else
-            drop sell_chest -1 -1 -1
-        endif
+        drop sell_chest -1 -1 -1
     endwhile
 endfor
 
-dclicktype "resource container" ground
-waitforgump 1859005118
-gumpresponse 2
-wft
-hotkey "target self"
 wait 250
-dclicktype "resource container" ground
-waitforgump 1859005118
-gumpresponse 2
-wft
-target itens_to_save_bag
 
-@clearignore 
+organizer 3
 
 wait 250
 
+
+if findtype "storage shelf" true as shelf
+    menu shelf 1
+    wait 100
+endif
 
 script "Move Unidentified"
-while queued
-    wait 250
-endwhile

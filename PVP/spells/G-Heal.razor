@@ -1,8 +1,52 @@
-overhead 'greater heal'
+sysmsg 'greater heal'
+interrupt
+if targetexists 'any'
+    hotkey "cancel current target"
+endif
 if insysmsg 'you cannot move' or insysmsg 'You must wait before using this command again'
     say '[pouch'
     wait 50
 endif
+if stam <= 15
+    if findtype "Red Potion" backpack
+        if not rhandempty
+            while not rhandempty
+                hotkey "arm/disarm right hand"
+                wait 250
+            endwhile
+        endif
+        usetype 'Red Potion' 'backpack'
+    else
+        overhead "No Refresh Potions"
+    endif
+endif
+if not timerexists bandage
+    createtimer bandage
+    settimer bandage 15000
+endif
 if hp < maxhp
+    if timer bandage >= 15000
+        hotkey "bandage self"
+        settimer bandage 0
+    endif
+    if hp <= 50 and cooldown healpot = 0
+        if findtype "Yellow Potion" backpack as pot
+            if not rhandempty
+                while not rhandempty
+                    hotkey "arm/disarm right hand"
+                    wait 250
+                endwhile
+            endif
+            usetype 'Yellow Potion' 'backpack'
+            wait 250
+            cooldown healpot 10000
+        else
+            overhead "No Heal Potions"
+        endif
+    endif
     hotkey '> greater heal/cure self'
+endif
+
+if lhandempty            
+    hotkey "arm/disarm left hand"
 endif

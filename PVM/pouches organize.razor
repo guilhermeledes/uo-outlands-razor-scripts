@@ -1,21 +1,35 @@
 @clearignore 
 @setvar hiden_pouch 0
 
+if findtype "reagent satchel" as satchel
+    hotkey "set organizer hotbag-02"
+    wft 5000
+    target satchel
+else
+    overhead "no satchel found"
+    //stop
+endif
+
 if findtype pouch backpack 0 as brown
-if findtype rope backpack 2799 as corda
+    dclick brown
     while findtype pouch brown 38 as red
         if hiden_pouch = 0
             @setvar hiden_pouch 1
             hotkey "set organizer hotbag-01"
             wft 5000
             target red
+        else
+            wait 100
+            drop red 91 94 0
         endif
         lift red 1
-        wait 100
-        drop brown 91 94 0
         @ignore red
     endwhile
-        lift corda 1
+    wait 100
+    drop brown 91 94 0
+    
+if findtype rope backpack 2799 as corda
+    lift corda 60000
         wait 100
         drop brown 94 91 0
 else

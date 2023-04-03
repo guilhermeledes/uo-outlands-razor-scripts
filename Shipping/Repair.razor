@@ -1,5 +1,59 @@
-dclicktype "wall shelf"
-waitforgump 1271619955
-gumpresponse 3
-wait 11000
-loop
+clearsysmsg
+while not dead
+    if not findtype 25758 backpack
+        overhead "No ship repair kit found"
+        stop
+    endif
+    say "[repairhull"
+    wait 500
+    if insysmsg "you must wait"
+        overhead "Waiting combat..."
+        wait 1000
+        replay
+    endif
+    if insysmsg "not need to be repaired"
+        break
+    else
+        wait 11000
+    endif
+endwhile
+clearsysmsg 
+while not dead
+    if not findtype 25758 backpack
+        overhead "No ship repair kit found"
+        stop
+    endif
+    say "[repairsails"
+    wait 500
+    if insysmsg "you must wait"
+        overhead "Waiting combat..."
+        wait 1000
+        replay
+    endif
+    if insysmsg "not need to be repaired"
+        break
+    else
+        wait 11000
+    endif
+endwhile
+clearsysmsg 
+while not dead
+    if not findtype 25758 backpack
+        overhead "No ship repair kit found"
+        stop
+    endif
+    say "[repairguns"
+    wait 500
+    if insysmsg "you must wait"
+        overhead "Waiting combat..."
+        wait 1000
+        replay
+    endif
+    if insysmsg "not need to be repaired"
+        break
+    else
+        wait 11000
+    endif
+endwhile
+
+overhead "Ship already repaired!"

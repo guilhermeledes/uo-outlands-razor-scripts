@@ -1,0 +1,18 @@
+if targetexists 'harmful'
+    hotkey 'Last Target'
+    overhead '>> TARGET <<' 41 'last'
+    overhead '>> TARGET <<' 41 'last'
+    overhead '>> TARGET <<' 41 'last'
+endif
+
+@setvar! myKillTarget lasttarget 
+
+getlabel myKillTarget desc
+overhead desc
+
+hotkey 'Clear Target Queue'
+
+hotkey 'Toggle War Only'
+hotkey 'Toggle Peace Only'
+
+cast 'poison'

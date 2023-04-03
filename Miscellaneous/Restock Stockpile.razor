@@ -1,0 +1,17 @@
+if findtype "resource container" true as stockpile
+    menu stockpile 0
+    wft 5000
+    target 0xDF133
+    wait 100
+else
+    overhead "no stockpile near"
+endif
+
+if findtype "resource container" true as stockpile
+    menu stockpile 0
+    wft 5000
+    target backpack
+    wait 100
+else
+    overhead "no stockpile near"
+endif
