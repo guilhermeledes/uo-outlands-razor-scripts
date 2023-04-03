@@ -1,0 +1,128 @@
+@setvar! keepTrashInBackpack 0
+
+// list of scrolls to keep
+removelist not_trash
+createlist not_trash
+pushlist not_trash "tailoring"
+pushlist not_trash "poison"
+pushlist not_trash "taste"
+pushlist not_trash "alchemy"
+pushlist not_trash "inscription"
+pushlist not_trash "necro"
+pushlist not_trash "chiv"
+pushlist not_trash "forensic"
+
+@clearignore! 
+
+overhead "Select your tome or bag of scrolls to get a count" 88
+@setvar! mySkillScrollTomeOrBag
+
+if gumpexists 2125225775
+    gumpclose 2125225775
+    wait 200
+endif
+dclick mySkillScrollTomeOrBag
+wait 200
+if gumpexists 2125225775
+    gumpresponse 3 2125225775    
+    waitforgump 2125225775 5000
+    for 2
+        gumpresponse 10 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 11 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 12 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 13 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 14 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 15 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 16 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 17 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 18 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 19 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 20 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 21 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 22 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 23 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 24 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 25 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 26 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 27 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 28 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 29 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 30 2125225775
+        waitforgump 2125225775 5000
+        gumpresponse 5 2125225775
+        waitforgump 2125225775 5000
+    endfor
+else
+    while findtype "scroll of calling" mySkillScrollTomeOrBag as item
+        lift item 60000
+        drop backpack -1 -1 -1
+        wait 650
+    endwhile
+endif
+
+if counttype "scroll of calling" backpack as total
+
+    while findtype "scroll of calling" backpack as item
+        getlabel item desc
+        @setvar! isNotTrash 0
+        foreach ss in not_trash
+            if ss in desc
+                lift item 60000
+                wait 200
+                drop mySkillScrollTomeOrBag -1 -1 -1
+                @setvar! isNotTrash 1
+            endif
+        endfor
+        if isNotTrash = 1
+            sysmsg "Ignored: {{desc}}"
+        else
+            sysmsg "Counted as trash: {{desc}}"
+            @ignore item
+        endif
+
+    endwhile
+    @clearignore 
+
+    overhead "Total scrolls: {{total}}" 88
+endif
+
+if counttype "scroll of calling" backpack as total_trash
+    overhead "Trash scrolls: {{total_trash}}" 88
+endif
+
+if keepTrashInBackpack = 1
+    stop
+endif
+
+if gumpexists 2125225775
+    gumpresponse 2 2125225775
+    wait 200
+    menu mySkillScrollTomeOrBag 0
+    gumpclose 
+else
+    while findtype "scroll of calling" backpack as item
+        lift item 60000
+        drop mySkillScrollTomeOrBag -1 -1 -1
+        wait 650
+    endwhile
+endif
