@@ -186,7 +186,7 @@ if findtype "map" backpack as my_map
     
     waitforgump gumpIdToCheck 1000
     
-    if "[100.0%" in desc or "(100.0%" in desc
+    if "100.0%" in desc
         menu myTmapTome 0
         wait 650
     else
@@ -207,21 +207,23 @@ if findtype "map" backpack as my_map
                 waitforgump gumpIdToCheck 1000
             else
                 wait 1500
-                getlabel my_map desc2
-                wait 200
             endif
+            getlabel my_map desc2
+            wait 200
             
-            if "[100.0%" in desc2 or "(100.0%" in desc2
+            if "100.0%" in desc2
                 menu myTmapTome 0
                 gumpclose gumpIdToCheck
                 wait 650
                 replay
-            elseif insysmsg "maximum accuracy"
+            elseif insysmsg "maximum accuracy" or "80.0%" in desc2
                 getlabel my_map desc3
                 wait 200
 
-                if "[100.0%" in desc3 or "(100.0%" in desc3
+                if "100.0%" in desc3
+                    menu myTmapTome 0
                     gumpclose gumpIdToCheck
+                    wait 650
                     replay
                 endif
                 overhead "Changing Spyglass"
